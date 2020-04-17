@@ -6,7 +6,7 @@ CREATE TABLE `immobili` (
   `cap` varchar(255),
   `circoscrizione` int,
   `codice` varchar(255),
-  `id_tipologia` varchar(255),
+  `id_tipologia` int,
   `telefono_ref` varchar(255),
   `nome_ref` varchar(255),
   `created_at` timestamp,
@@ -29,6 +29,8 @@ CREATE TABLE `ditte` (
   `telefono_ref` varchar(255),
   `nome_ref` varchar(255),
   `categoria` varchar(255)
+  `created_at` timestamp,
+  `modified_at` timestamp
 );
 
 CREATE TABLE `interventi_immobili` (
@@ -59,9 +61,11 @@ CREATE TABLE `festivita` (
 
 CREATE TABLE `assenze` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
-  `id_utente` in,
+  `id_utente` int,
   `data` date,
-  `descrizione` varchar(255)
+  `descrizione` varchar(255),
+  `created_at` timestamp,
+  `modified_at` timestamp
 );
 
 ALTER TABLE `immobili` ADD FOREIGN KEY (`id_tipologia`) REFERENCES `tipo_immobili` (`id`);
