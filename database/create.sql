@@ -1,26 +1,26 @@
 CREATE TABLE `immobili` (
   `id` int NOT NULL PRIMARY KEY,
-  `nome` varchar(255),
+  `nome` varchar(255) NOT NULL,
   `descrizione` varchar(255),
   `indirizzo` varchar(255),
   `cap` varchar(255),
   `circoscrizione` int,
   `codice` varchar(255),
-  `id_tipologia` int,
+  `id_tipologia` int NOT NULL,
   `telefono_ref` varchar(255),
   `nome_ref` varchar(255),
-  `created_at` timestamp NOT NULL,
-  `last_modified_at` timestamp DEFAULT CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `last_modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 CREATE TABLE `tipo_immobili` (
   `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `tipologia` varchar(255)
+  `tipologia` varchar(255) NOT NULL
 );
 
 CREATE TABLE `ditte` (
   `id` int NOT NULL PRIMARY KEY,
-  `nome` varchar(255),
+  `nome` varchar(255) NOT NULL,
   `indirizzo` varchar(255),
   `cap` varchar(255),
   `comune` varchar(255),
@@ -29,19 +29,19 @@ CREATE TABLE `ditte` (
   `telefono_ref` varchar(255),
   `nome_ref` varchar(255),
   `categoria` varchar(255),
-  `created_at` timestamp NOT NULL,
-  `last_modified_at` timestamp DEFAULT CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `last_modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 CREATE TABLE `interventi_immobili` (
   `id` int NOT NULL PRIMARY KEY,
   `data` date,
   `descrizione` varchar(255),
-  `id_immobile` int,
-  `id_utente` int,
-  `id_ditta` int,
-  `created_at` timestamp,
-  `last_modified_at` timestamp
+  `id_immobile` int NOT NULL,
+  `id_utente` int NOT NULL,
+  `id_ditta` int NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `last_modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 CREATE TABLE `utenti` (
@@ -49,23 +49,23 @@ CREATE TABLE `utenti` (
   `nome` varchar(255),
   `cognome` varchar(255),
   `email` varchar(255) NOT NULL UNIQUE,
-  `created_at` timestamp NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `password` varchar(255)
 );
 
 CREATE TABLE `festivita` (
   `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `data` date,
+  `data` date NOT NULL,
   `descrizione` varchar(255)
 );
 
 CREATE TABLE `assenze` (
   `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `id_utente` int,
-  `data` date,
+  `id_utente` int NOT NULL,
+  `data` date NOT NULL,
   `descrizione` varchar(255),
-  `created_at` timestamp NOT NULL,
-  `last_modified_at` timestamp DEFAULT CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `last_modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 ALTER TABLE `immobili` ADD FOREIGN KEY (`id_tipologia`) REFERENCES `tipo_immobili` (`id`);

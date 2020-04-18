@@ -87,8 +87,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     if($error_check){
         // Prepare an insert statement
         $sql = "INSERT INTO ditte
-        (id, nome, indirizzo, cap, comune, provincia, email, telefono_ref, nome_ref, categoria, created_at)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, now())";
+        (id, nome, indirizzo, cap, comune, provincia, email, telefono_ref, nome_ref, categoria)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         error_log("sql");
         error_log($sql);

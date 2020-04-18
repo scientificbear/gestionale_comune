@@ -89,8 +89,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
         email=?,
         telefono_ref=?,
         nome_ref=?,
-        categoria=?,
-        last_modified_at=now()
+        categoria=?
         WHERE id=?";
  
         if($stmt = $mysqli->prepare($sql)){
