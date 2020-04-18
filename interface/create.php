@@ -61,19 +61,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $email = $input_email;
     }
 
-    $input_telefono_ref = trim($_POST["telefono_ref"]);
-    if(empty($input_telefono_ref)){
-        $telefono_ref_err = "Per favore inserisci 'telefono_ref'";
-    } else{
-        $telefono_ref = $input_telefono_ref;
-    }
+    $telefono_ref = trim($_POST["telefono_ref"]);
 
-    $input_nome_ref = trim($_POST["nome_ref"]);
-    if(empty($input_nome_ref)){
-        $nome_ref_err = "Per favore inserisci 'nome_ref'";
-    } else{
-        $nome_ref = $input_nome_ref;
-    }
+    $nome_ref = trim($_POST["nome_ref"]);
 
     $input_categoria = trim($_POST["categoria"]);
     if(empty($input_categoria)){
@@ -83,29 +73,39 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }
     
     // Check input errors before inserting in database
-    if(empty($id_err) && empty($nome_err) && empty($indirizzo_err) && empty($cap_err) && empty($comune_err) && empty($provincia_err) && empty($email_err) && empty($telefono_ref_err) && empty($nome_ref_err) && empty($categoria_err)){
+    $error_check = empty($id_err) &&
+        empty($nome_err) &&
+        empty($indirizzo_err) &&
+        empty($cap_err) &&
+        empty($comune_err) &&
+        empty($provincia_err) &&
+        empty($email_err) &&
+        empty($telefono_ref_err) &&
+        empty($nome_ref_err) &&
+        empty($categoria_err);
+
+    if($error_check){
         // Prepare an insert statement
-        $sql = "INSERT INTO ditte (id, nome, indirizzo, cap, comune, provincia, email, telefono_ref, nome_ref, categoria, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, now())";
+        $sql = "INSERT INTO ditte
+        (id, nome, indirizzo, cap, comune, provincia, email, telefono_ref, nome_ref, categoria, created_at)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, now())";
 
         error_log("sql");
         error_log($sql);
  
         if($stmt = $mysqli->prepare($sql)){
             // Bind variables to the prepared statement as parameters
-            $stmt->bind_param("dsssssssss", $param_id, $param_nome, $param_indirizzo, $param_cap, $param_comune, $param_provincia, $param_email, $param_telefono_ref, $param_nome_ref, $param_categoria);
-            
-            // Set parameters
-            $param_id = $id;
-            $param_nome = $nome;
-            $param_indirizzo = $indirizzo;
-            $param_comune = $comune;
-            $param_cap = $cap;
-            $param_provincia = $provincia;
-            $param_email = $telefono_ref;
-            $param_telefono_ref = $telefono_ref;
-            $param_nome_ref = $nome_ref;
-            $param_categoria = $categoria;            
-            error_log($stmt);
+            $stmt->bind_param("dsssssssss",
+                $id,
+                $nome,
+                $indirizzo,
+                $cap,
+                $comune,
+                $provincia,
+                $email,
+                $telefono_ref,
+                $nome_ref,
+                $categoria);
 
             // Attempt to execute the prepared statement
             if($stmt->execute()){
