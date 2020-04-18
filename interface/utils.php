@@ -12,8 +12,30 @@ function check_variable($variable, $variable_name)
     }
 
     return array($variable, $variable_err);
-
 }
 
 
+function insert_data($table,$field,$data,$mysqli)
+    {
+        $field_values= implode(',',$field);
+        $data_values=implode("','",array_map("addslashes", $data));
+        $sql= "INSERT INTO $table (".$field_values.") VALUES ('".$data_values."');";
+        error_log($sql);
+
+        return $mysqli->query($sql);
+    }
+
+function update_data($table,$field,$data,$id,$mysqli)
+    {
+
+        $set_values = "";
+        foreach (array_combine($field, $data) as $key => $value){
+            $set_values = $set_values." ".$key."='".addslashes($value)."',";
+        }
+
+        $sql= "UPDATE $table SET".rtrim($set_values, ",")." WHERE id=".$id.";";
+        error_log($sql);
+
+        return $mysqli->query($sql);
+    }
 ?>

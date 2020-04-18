@@ -16,7 +16,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     // Validate
     list($id, $id_err) = check_variable($_POST["id"], "id");
     list($nome, $nome_err) = check_variable($_POST["nome"], "nome");
-    list($cognome, $cognome_err) = check_variable($_POST["cognome"], "cognome");
+    list($indirizzo, $indirizzo_err) = check_variable($_POST["indirizzo"], "indirizzo");
     list($comune, $comune_err) = check_variable($_POST["comune"], "comune");
     list($cap, $cap_err) = check_variable($_POST["cap"], "cap");
     list($provincia, $provincia_err) = check_variable($_POST["provincia"], "provincia");
@@ -39,37 +39,18 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         empty($categoria_err);
 
     if($error_check){
-        // Prepare an insert statement
-        $sql = "INSERT INTO ditte
-        (id, nome, indirizzo, cap, comune, provincia, email, telefono_ref, nome_ref, categoria)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
- 
-        if($stmt = $mysqli->prepare($sql)){
-            // Bind variables to the prepared statement as parameters
-            $stmt->bind_param("dsssssssss",
-                $id,
-                $nome,
-                $indirizzo,
-                $cap,
-                $comune,
-                $provincia,
-                $email,
-                $telefono_ref,
-                $nome_ref,
-                $categoria);
+        $table = "ditte";
+        $field = array("id", "nome", "indirizzo", "cap", "comune", "provincia", "email", "telefono_ref", "nome_ref", "categoria");
+        $data = array($id, $nome, $indirizzo, $cap, $comune, $provincia, $email, $telefono_ref, $nome_ref, $categoria);
+        $result = insert_data($table,$field,$data,$mysqli);
 
-            // Attempt to execute the prepared statement
-            if($stmt->execute()){
-                // Records created successfully. Redirect to landing page
-                header("location: index.php");
-                exit();
-            } else{
-                echo "Something went wrong. Please try again later (", $stmt->error, ")";
-            }
+        if($result){
+            // Records created successfully. Redirect to landing page
+            header("location: index.php");
+            exit();
+        } else{
+            echo "Something went wrong. Please try again later (", $mysqli->error, ")";
         }
-         
-        // Close statement
-        $stmt->close();
     }
     
     // Close connection

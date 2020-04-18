@@ -17,7 +17,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
     // Validate name
     list($id, $id_err) = check_variable($_POST["id"], "id");
     list($nome, $nome_err) = check_variable($_POST["nome"], "nome");
-    list($cognome, $cognome_err) = check_variable($_POST["cognome"], "cognome");
+    list($indirizzo, $indirizzo_err) = check_variable($_POST["indirizzo"], "indirizzo");
     list($comune, $comune_err) = check_variable($_POST["comune"], "comune");
     list($cap, $cap_err) = check_variable($_POST["cap"], "cap");
     list($provincia, $provincia_err) = check_variable($_POST["provincia"], "provincia");
@@ -42,44 +42,19 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
 
     if($error_check){
         // Prepare an update statement
-        $sql = "UPDATE ditte SET
-        nome=?,
-        indirizzo=?,
-        cap=?,
-        comune=?,
-        provincia=?,
-        email=?,
-        telefono_ref=?,
-        nome_ref=?,
-        categoria=?
-        WHERE id=?";
- 
-        if($stmt = $mysqli->prepare($sql)){
-            // Bind variables to the prepared statement as parameters
-            $stmt->bind_param("sssssssssd",
-                $nome,
-                $indirizzo,
-                $cap,
-                $comune,
-                $provincia,
-                $email,
-                $telefono_ref,
-                $nome_ref,
-                $categoria,
-                $id);
-
-            // Attempt to execute the prepared statement
-            if($stmt->execute()){
-                // Records updated successfully. Redirect to landing page
-                header("location: index.php");
-                exit();
-            } else{
-                echo "Something went wrong. Please try again later (", $stmt->error, ")";
-            }
+        $table = "ditte";
+        $field = array("nome", "indirizzo", "cap", "comune", "provincia", "email", "telefono_ref", "nome_ref", "categoria");
+        $data = array($nome, $indirizzo, $cap, $comune, $provincia, $email, $telefono_ref, $nome_ref, $categoria);
+        $result = update_data($table,$field,$data,$id,$mysqli);
+        var_dump($result);
+        // Attempt to execute the prepared statement
+        if($result){
+            // Records updated successfully. Redirect to landing page
+            header("location: index.php");
+            exit();
+        } else{
+            echo "Something went wrong. Please try again later (", $mysqli->error, ")";
         }
-         
-        // Close statement
-        $stmt->close();
     }
     
     // Close connection
@@ -126,7 +101,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                 }
                 
             } else{
-                echo "Something went wrong. Please try again later (", $stmt->error, ")";
+                echo "Something went wrong. Please try again later (", $mysqli->error, ")";
             }
         }
         
