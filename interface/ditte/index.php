@@ -1,6 +1,6 @@
 <!-- vedi https://www.tutorialrepublic.com/php-tutorial/php-mysql-crud-application.php -->
 <?php
-require_once "protect.php";
+require_once "../protect.php";
 ?>
 
 <!DOCTYPE html>
@@ -40,7 +40,7 @@ require_once "protect.php";
                     </div>
                     <?php
                     // Include config file
-                    require_once "config.php";
+                    require_once "../config.php";
                     
                     // Attempt select query execution
                     $sql = "SELECT * FROM ditte";
