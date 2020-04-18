@@ -1,4 +1,7 @@
 <!-- vedi https://www.tutorialrepublic.com/php-tutorial/php-mysql-crud-application.php -->
+<?php
+require_once "protect.php";
+?>
 
 <!DOCTYPE html>
 <html lang="en">

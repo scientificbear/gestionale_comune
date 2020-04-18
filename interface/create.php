@@ -1,4 +1,8 @@
 <?php
+
+require_once "protect.php";
+require_once "utils.php";
+
 // Include config file
 require_once "config.php";
  
@@ -10,67 +14,17 @@ $id_err = $nome_err = $indirizzo_err = $cap_err = $comune_err = $provincia_err =
 if($_SERVER["REQUEST_METHOD"] == "POST"){
 
     // Validate
-    $input_id = trim($_POST["id"]);
-    error_log($input_id);
-    if(empty($input_id)){
-        $id_err = "Per favore inserisci 'id'";
-    } else{
-        $id = $input_id;
-    }
-
-    $input_nome = trim($_POST["nome"]);
-    error_log($input_nome);
-    if(empty($input_nome)){
-        $nome_err = "Per favore inserisci 'nome'";
-    } else{
-        $nome = $input_nome;
-    }
-
-    $input_indirizzo = trim($_POST["indirizzo"]);
-    if(empty($input_indirizzo)){
-        $indirizzo_err = "Per favore inserisci 'indirizzo'";
-    } else{
-        $indirizzo = $input_indirizzo;
-    }
-
-    $input_cap = trim($_POST["cap"]);
-    if(empty($input_cap)){
-        $cap_err = "Per favore inserisci 'cap'";
-    } else{
-        $cap = $input_cap;
-    }
-
-    $input_comune = trim($_POST["comune"]);
-    if(empty($input_comune)){
-        $comune_err = "Per favore inserisci 'comune'";
-    } else{
-        $comune = $input_comune;
-    }
-
-    $input_provincia = trim($_POST["provincia"]);
-    if(empty($input_provincia)){
-        $provincia_err = "Per favore inserisci 'provincia'";
-    } else{
-        $provincia = $input_provincia;
-    }
-
-    $input_email = trim($_POST["email"]);
-    if(empty($input_email)){
-        $email_err = "Per favore inserisci 'email'";
-    } else{
-        $email = $input_email;
-    }
+    list($id, $id_err) = check_variable($_POST["id"], "id");
+    list($nome, $nome_err) = check_variable($_POST["nome"], "nome");
+    list($cognome, $cognome_err) = check_variable($_POST["cognome"], "cognome");
+    list($comune, $comune_err) = check_variable($_POST["comune"], "comune");
+    list($cap, $cap_err) = check_variable($_POST["cap"], "cap");
+    list($provincia, $provincia_err) = check_variable($_POST["provincia"], "provincia");
+    list($email, $email_err) = check_variable($_POST["email"], "email");
+    list($categoria, $categoria_err) = check_variable($_POST["categoria"], "categoria");
 
     $telefono_ref = trim($_POST["telefono_ref"]);
-
     $nome_ref = trim($_POST["nome_ref"]);
-
-    $input_categoria = trim($_POST["categoria"]);
-    if(empty($input_categoria)){
-        $categoria_err = "Per favore inserisci 'categoria'";
-    } else{
-        $categoria = $input_categoria;
-    }
     
     // Check input errors before inserting in database
     $error_check = empty($id_err) &&
@@ -89,9 +43,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $sql = "INSERT INTO ditte
         (id, nome, indirizzo, cap, comune, provincia, email, telefono_ref, nome_ref, categoria)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-        error_log("sql");
-        error_log($sql);
  
         if($stmt = $mysqli->prepare($sql)){
             // Bind variables to the prepared statement as parameters
