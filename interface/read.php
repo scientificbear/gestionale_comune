@@ -33,6 +33,8 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
                 $nome_ref = $row["nome_ref"];
                 $telefono_ref = $row["telefono_ref"];
                 $categoria = $row["categoria"];
+                $created_at = $row["created_at"];
+                $last_modified_at = $row["last_modified_at"];
             } else{
                 // URL doesn't contain valid id parameter. Redirect to error page
                 header("location: error.php");
@@ -78,7 +80,7 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
                     </div>
                     <div class="form-group">
                         <label>ID</label>
-                        <p class="form-control-static"><?php echo $row["jd"]; ?></p>
+                        <p class="form-control-static"><?php echo $row["id"]; ?></p>
                     </div>
                     <div class="form-group">
                         <label>Nome</label>
@@ -116,7 +118,14 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
                         <label>Categoria</label>
                         <p class="form-control-static"><?php echo $row["categoria"]; ?></p>
                     </div>
-
+                    <div class="form-group">
+                        <label>created_at</label>
+                        <p class="form-control-static"><?php echo $row["created_at"]; ?></p>
+                    </div>
+                    <div class="form-group">
+                        <label>last_modified_at</label>
+                        <p class="form-control-static"><?php echo $row["last_modified_at"]; ?></p>
+                    </div>
 
 
                     <p><a href="index.php" class="btn btn-primary">Indietro</a></p>

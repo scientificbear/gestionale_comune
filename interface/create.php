@@ -85,7 +85,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     // Check input errors before inserting in database
     if(empty($id_err) && empty($nome_err) && empty($indirizzo_err) && empty($cap_err) && empty($comune_err) && empty($provincia_err) && empty($email_err) && empty($telefono_ref_err) && empty($nome_ref_err) && empty($categoria_err)){
         // Prepare an insert statement
-        $sql = "INSERT INTO ditte (id, nome, indirizzo, cap, comune, provincia, email, telefono_ref, nome_ref, categoria) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO ditte (id, nome, indirizzo, cap, comune, provincia, email, telefono_ref, nome_ref, categoria, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, now())";
 
         error_log("sql");
         error_log($sql);
@@ -104,8 +104,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             $param_email = $telefono_ref;
             $param_telefono_ref = $telefono_ref;
             $param_nome_ref = $nome_ref;
-            $param_categoria = $categoria;
-            
+            $param_categoria = $categoria;            
             error_log($stmt);
 
             // Attempt to execute the prepared statement

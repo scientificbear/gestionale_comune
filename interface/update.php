@@ -79,7 +79,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
     // Check input errors before inserting in database
     if(empty($id_err) && empty($nome_err) && empty($indirizzo_err) && empty($cap_err) && empty($comune_err) && empty($provincia_err) && empty($email_err) && empty($telefono_ref_err) && empty($nome_ref_err) && empty($categoria_err)){
         // Prepare an update statement
-        $sql = "UPDATE ditte SET nome=?, indirizzo=?, cap=?, comune=?, provincia=?, email=?, telefono_ref=?, nome_ref=?, categoria=? WHERE id=?";
+        $sql = "UPDATE ditte SET nome=?, indirizzo=?, cap=?, comune=?, provincia=?, email=?, telefono_ref=?, nome_ref=?, categoria=?, last_modified_at=now() WHERE id=?";
  
         if($stmt = $mysqli->prepare($sql)){
             // Bind variables to the prepared statement as parameters
