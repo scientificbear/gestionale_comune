@@ -17,11 +17,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     // Validate
     list($id, $id_err) = check_variable($_POST["id"], "id");
     list($descrizione, $descrizione_err) = check_variable($_POST["descrizione"], "descrizione");
-    list($data, $data_err) = check_variable($_POST["data"], "data");
 
     $id_utente = $_SESSION["id"];
     $id_immobile = $_POST["id_immobile"];
     $id_ditta = $_POST["id_ditta"];
+    $data = $_POST["data"];
 
     // Check input errors before inserting in database
     $error_check = empty($id_err) &&
@@ -158,7 +158,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                         <div class="search-box form-group <?php echo (!empty($id_ditta_err)) ? 'has-error' : ''; ?>">
                             <label>ditta</label>
                             <?php
-                            $sql = "SELECT id, nome, categoria FROM ditte ORDER BY nome";
+                            $sql = "SELECT d.id, d.nome, cd.categoria FROM ditte d LEFT JOIN categoria_ditte cd ON d.id_categoria=cd.id ORDER BY nome";
                             if($result = $mysqli->query($sql)){
                                 echo "<select id='sel_ditte' style='width: 200px;' name='id_ditta'>";
                                 if($result->num_rows > 0){

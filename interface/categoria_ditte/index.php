@@ -35,29 +35,21 @@ require_once "../protect.php";
             <div class="row">
                 <div class="col-md-12">
                     <div class="page-header clearfix">
-                        <h2 class="pull-left">Dettagli ditta</h2>
-                        <a href="create.php" class="btn btn-success pull-right">Aggiungi nuova ditta</a>
+                        <h2 class="pull-left">Dettagli categorie ditte</h2>
+                        <a href="create.php" class="btn btn-success pull-right">Aggiungi nuova categoria</a>
                     </div>
                     <?php
                     // Include config file
                     require_once "../config.php";
                     
                     // Attempt select query execution
-                    $sql = "SELECT d.*, cd.categoria FROM ditte d LEFT JOIN categoria_ditte cd ON d.id_categoria=cd.id";
+                    $sql = "SELECT * FROM categoria_ditte";
                     if($result = $mysqli->query($sql)){
                         if($result->num_rows > 0){
                             echo "<table class='table table-bordered table-striped'>";
                                 echo "<thead>";
                                     echo "<tr>";
                                     echo "<th>#</th>";
-                                    echo "<th>nome</th>";
-                                    echo "<th>indirizzo</th>";
-                                    echo "<th>cap</th>";
-                                    echo "<th>comune</th>";
-                                    echo "<th>provincia</th>";
-                                    echo "<th>email</th>";
-                                    echo "<th>telefono_ref</th>";
-                                    echo "<th>nome_ref</th>";
                                     echo "<th>categoria</th>";
                                 echo "</tr>";
                                 echo "</thead>";
@@ -65,14 +57,6 @@ require_once "../protect.php";
                                 while($row = $result->fetch_array()){
                                     echo "<tr>";
                                     echo "<td>" . $row['id'] . "</td>";
-                                    echo "<td>" . $row['nome'] . "</td>";
-                                    echo "<td>" . $row['indirizzo'] . "</td>";
-                                    echo "<td>" . $row['cap'] . "</td>";
-                                    echo "<td>" . $row['comune'] . "</td>";
-                                    echo "<td>" . $row['provincia'] . "</td>";
-                                    echo "<td>" . $row['email'] . "</td>";
-                                    echo "<td>" . $row['telefono_ref'] . "</td>";
-                                    echo "<td>" . $row['nome_ref'] . "</td>";
                                     echo "<td>" . $row['categoria'] . "</td>";
                                     echo "<td>";
                                             echo "<a href='read.php?id=". $row['id'] ."' title='Vedi Record' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span></a>";

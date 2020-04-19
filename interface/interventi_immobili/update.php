@@ -202,7 +202,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                         <div class="search-box form-group <?php echo (!empty($id_ditta_err)) ? 'has-error' : ''; ?>">
                             <label>ditta</label>
                             <?php
-                            $sql = "SELECT id, nome, categoria FROM ditte ORDER BY nome";
+                            $sql = "SELECT d.id, d.nome, cd.categoria FROM ditte d LEFT JOIN categoria_ditte cd ON d.id_categoria=cd.id ORDER BY nome";
                             if($result = $mysqli->query($sql)){
                                 echo "<select id='sel_ditte' style='width: 200px;' name='id_ditta'>";
                                 if($result->num_rows > 0){

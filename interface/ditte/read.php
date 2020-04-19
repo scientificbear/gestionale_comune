@@ -8,7 +8,7 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
     require_once "../config.php";
     
     // Prepare a select statement
-    $sql = "SELECT * FROM ditte WHERE id = ?";
+    $sql = "SELECT d.*, cd.categoria FROM ditte d LEFT JOIN categoria_ditte cd ON d.id_categoria=cd.id WHERE d.id = ?";
     
     if($stmt = $mysqli->prepare($sql)){
         // Bind variables to the prepared statement as parameters

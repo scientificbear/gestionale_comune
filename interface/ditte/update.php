@@ -6,8 +6,8 @@ require_once "../utils.php";
 require_once "../config.php";
  
 // Define variables and initialize with empty values
-$nome = $indirizzo = $cap = $comune = $provincia = $email = $telefono_ref = $nome_ref = $categoria = "";
-$nome_err = $indirizzo_err = $cap_err = $comune_err = $provincia_err = $email_err = $telefono_ref_err = $nome_ref_err = $categoria_err = "";
+$nome = $indirizzo = $cap = $comune = $provincia = $email = $telefono_ref = $nome_ref = $id_categoria = "";
+$nome_err = $indirizzo_err = $cap_err = $comune_err = $provincia_err = $email_err = $telefono_ref_err = $nome_ref_err = $id_categoria_err = "";
  
 // Processing form data when form is submitted
 if(isset($_POST["id"]) && !empty($_POST["id"])){
@@ -21,7 +21,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
     list($cap, $cap_err) = check_variable($_POST["cap"], "cap");
     list($provincia, $provincia_err) = check_variable($_POST["provincia"], "provincia");
     list($email, $email_err) = check_variable($_POST["email"], "email");
-    list($categoria, $categoria_err) = check_variable($_POST["categoria"], "categoria");
+    list($id_categoria, $id_categoria_err) = check_variable($_POST["id_categoria"], "id_categoria");
 
     $telefono_ref = trim($_POST["telefono_ref"]);
 
@@ -37,13 +37,13 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
         empty($email_err) &&
         empty($telefono_ref_err) &&
         empty($nome_ref_err) &&
-        empty($categoria_err);
+        empty($id_categoria_err);
 
     if($error_check){
         // Prepare an update statement
         $table = "ditte";
-        $field = array("nome", "indirizzo", "cap", "comune", "provincia", "email", "telefono_ref", "nome_ref", "categoria");
-        $data = array($nome, $indirizzo, $cap, $comune, $provincia, $email, $telefono_ref, $nome_ref, $categoria);
+        $field = array("nome", "indirizzo", "cap", "comune", "provincia", "email", "telefono_ref", "nome_ref", "id_categoria");
+        $data = array($nome, $indirizzo, $cap, $comune, $provincia, $email, $telefono_ref, $nome_ref, $id_categoria);
         $result = update_data($table,$field,$data,$id,$mysqli);
         var_dump($result);
         // Attempt to execute the prepared statement
@@ -51,13 +51,12 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
             // Records updated successfully. Redirect to landing page
             header("location: index.php");
             exit();
+            $mysqli->close();
         } else{
             echo "Something went wrong. Please try again later (", $mysqli->error, ")";
         }
     }
     
-    // Close connection
-    $mysqli->close();
 } else{
     // Check existence of id parameter before processing further
     if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
@@ -91,7 +90,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                     $email = $row["email"];
                     $nome_ref = $row["nome_ref"];
                     $telefono_ref = $row["telefono_ref"];
-                    $categoria = $row["categoria"];
+                    $id_categoria = $row["id_categoria"];
 
                 } else{
                     // URL doesn't contain valid id. Redirect to error page
@@ -107,8 +106,6 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
         // Close statement
         $stmt->close();
         
-        // Close connection
-        $mysqli->close();
     }  else{
         // URL doesn't contain id parameter. Redirect to error page
         header("location: error.php");
@@ -129,6 +126,28 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
             margin: 0 auto;
         }
     </style>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.12/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.12/js/select2.min.js"></script>
+
+    <script type="text/javascript">
+    $(document).ready(function(){
+        
+        // Initialize select2
+        $("#sel_categoria_ditte").select2();
+
+        // Read selected option
+        $('#but_read').click(function(){
+        var categoria = $('#sel_categoria_ditte option:selected').text();
+        var id_categoria = $('#sel_categoria_ditte').val();
+
+        $('#result').html("id : " + id_categoria + ", categoria : " + categoria);
+
+        });
+    });
+    </script>
+
 </head>
 <body>
     <div class="wrapper">
@@ -188,10 +207,33 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                             <span class="help-block"><?php echo $nome_ref_err;?></span>
                         </div>
 
-                        <div class="form-group <?php echo (!empty($categoria_err)) ? 'has-error' : ''; ?>">
-                            <label>categoria</label>
-                            <input type="text" name="categoria" class="form-control" value="<?php echo $categoria; ?>">
-                            <span class="help-block"><?php echo $categoria_err;?></span>
+                        <div class="search-box form-group <?php echo (!empty($id_categoria_err)) ? 'has-error' : ''; ?>">
+                            <label>id_categoria</label>
+                            <?php
+                            $sql = "SELECT id, categoria FROM categoria_ditte ORDER BY categoria";
+                            if($result = $mysqli->query($sql)){
+                                echo "<select id='sel_categoria_ditte' style='width: 200px;' name='id_categoria'>";
+                                if($result->num_rows > 0){
+                                    echo "<option selected='true' disabled='disabled'>categoria</option>";
+                                    while($row = $result->fetch_array()){
+                                        if ($row['id']==$id_categoria){
+                                            echo "<option value=" . $row['id'] . " selected>" . $row['categoria'] . "</option>";
+                                        } else {
+                                            echo "<option value=" . $row['id'] . ">" . $row['categoria'] . "</option>";
+                                        }
+                                    }
+                                    // Free result set
+                                    $result->free();
+                                }
+                                echo "</select>";
+                            } else{
+                                echo "ERROR: Non riesco ad eseguire $sql. " . $mysqli->error;
+                            }
+                            $mysqli->close();
+                            ?>
+                            <br />
+                            <div id='result'></div>
+                            <span class="help-block"><?php echo $id_categoria_err;?></span>
                         </div>
 
                         <input type="hidden" name="id" value="<?php echo $id; ?>"/>

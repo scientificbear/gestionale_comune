@@ -18,6 +18,12 @@ CREATE TABLE `tipo_immobili` (
   `tipologia` varchar(255) NOT NULL
 );
 
+CREATE TABLE `categoria_ditte` (
+  `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `categoria` varchar(255) NOT NULL
+);
+
+
 CREATE TABLE `ditte` (
   `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `nome` varchar(255) NOT NULL,
@@ -28,7 +34,7 @@ CREATE TABLE `ditte` (
   `email` varchar(255),
   `telefono_ref` varchar(255),
   `nome_ref` varchar(255),
-  `categoria` varchar(255),
+  `id_categoria` int,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `last_modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );

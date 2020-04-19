@@ -8,7 +8,7 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
     require_once "../config.php";
     
     // Prepare a select statement
-    $sql = "SELECT * FROM tipo_immobili WHERE id = ?";
+    $sql = "SELECT * FROM categoria_ditte WHERE id = ?";
     
     if($stmt = $mysqli->prepare($sql)){
         // Bind variables to the prepared statement as parameters
@@ -27,7 +27,7 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
                 
                 // Retrieve individual field value
                 $id = $row["id"];
-                $tipologia = $row["tipologia"];
+                $categoria = $row["categoria"];
             } else{
                 // URL doesn't contain valid id parameter. Redirect to error page
                 header("location: error.php");
@@ -54,7 +54,7 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Vedi tipo immobile</title>
+    <title>Vedi categoria ditte</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
     <style type="text/css">
         .wrapper{
@@ -69,15 +69,15 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
             <div class="row">
                 <div class="col-md-12">
                     <div class="page-header">
-                        <h1>View tipologia immobile</h1>
+                        <h1>View categoria ditte</h1>
                     </div>
                     <div class="form-group">
                         <label>ID</label>
                         <p class="form-control-static"><?php echo $row["id"]; ?></p>
                     </div>
                     <div class="form-group">
-                        <label>Tipologia</label>
-                        <p class="form-control-static"><?php echo $row["tipologia"]; ?></p>
+                        <label>Categoria</label>
+                        <p class="form-control-static"><?php echo $row["categoria"]; ?></p>
                     </div>
 
                     <p><a href="index.php" class="btn btn-primary">Indietro</a></p>
