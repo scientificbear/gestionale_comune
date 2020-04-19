@@ -17,6 +17,11 @@ require_once "protect.php";
         <h1>Ciao, <b><?php echo htmlspecialchars($_SESSION["nome"]); ?> <?php echo htmlspecialchars($_SESSION["cognome"]); ?></b>. Benvenuto.</h1>
     </div>
     <p>
+    <ul>
+    <li><a href="ditte/">ditte</a></li>
+    <li><a href="tipo_immobili/">tipo immobili</a></li>
+    </ul>
+    <p>
         <a href="reset-password.php" class="btn btn-warning">Reset Your Password</a>
         <a href="logout.php" class="btn btn-danger">Sign Out of Your Account</a>
     </p>

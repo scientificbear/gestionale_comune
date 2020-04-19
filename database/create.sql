@@ -1,5 +1,5 @@
 CREATE TABLE `immobili` (
-  `id` int NOT NULL PRIMARY KEY,
+  `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `nome` varchar(255) NOT NULL,
   `descrizione` varchar(255),
   `indirizzo` varchar(255),

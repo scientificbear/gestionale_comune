@@ -62,7 +62,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     </div>
                     <p>Please fill this form and submit to add employee record to the database.</p>
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-                        <div class="form-group <?php echo (!empty($nome_err)) ? 'has-error' : ''; ?>">
+                        <div class="form-group <?php echo (!empty($tipologia_err)) ? 'has-error' : ''; ?>">
                             <label>Tipologia</label>
                             <input type="text" name="tipologia" class="form-control" value="<?php echo $tipologia; ?>">
                             <span class="help-block"><?php echo $tipologia_err;?></span>
