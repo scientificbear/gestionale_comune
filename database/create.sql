@@ -19,7 +19,7 @@ CREATE TABLE `tipo_immobili` (
 );
 
 CREATE TABLE `ditte` (
-  `id` int NOT NULL PRIMARY KEY,
+  `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `nome` varchar(255) NOT NULL,
   `indirizzo` varchar(255),
   `cap` varchar(255),

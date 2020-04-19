@@ -7,14 +7,13 @@ require_once "../utils.php";
 require_once "../config.php";
  
 // Define variables and initialize with empty values
-$id = $nome = $indirizzo = $cap = $comune = $provincia = $email = $telefono_ref = $nome_ref = $categoria = "";
+$nome = $indirizzo = $cap = $comune = $provincia = $email = $telefono_ref = $nome_ref = $categoria = "";
 $id_err = $nome_err = $indirizzo_err = $cap_err = $comune_err = $provincia_err = $email_err = $telefono_ref_err = $nome_ref_err = $categoria_err = "";
 
 // Processing form data when form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
 
     // Validate
-    list($id, $id_err) = check_variable($_POST["id"], "id");
     list($nome, $nome_err) = check_variable($_POST["nome"], "nome");
     list($indirizzo, $indirizzo_err) = check_variable($_POST["indirizzo"], "indirizzo");
     list($comune, $comune_err) = check_variable($_POST["comune"], "comune");
@@ -40,8 +39,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
     if($error_check){
         $table = "ditte";
-        $field = array("id", "nome", "indirizzo", "cap", "comune", "provincia", "email", "telefono_ref", "nome_ref", "categoria");
-        $data = array($id, $nome, $indirizzo, $cap, $comune, $provincia, $email, $telefono_ref, $nome_ref, $categoria);
+        $field = array("nome", "indirizzo", "cap", "comune", "provincia", "email", "telefono_ref", "nome_ref", "categoria");
+        $data = array($nome, $indirizzo, $cap, $comune, $provincia, $email, $telefono_ref, $nome_ref, $categoria);
         $result = insert_data($table,$field,$data,$mysqli);
 
         if($result){
@@ -81,12 +80,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     </div>
                     <p>Please fill this form and submit to add employee record to the database.</p>
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-                        <div class="form-group <?php echo (!empty($id_err)) ? 'has-error' : ''; ?>">
-                            <label>Id</label>
-                            <input type="text" name="id" class="form-control" value="<?php echo $id; ?>">
-                            <span class="help-block"><?php echo $id_err;?></span>
-                        </div>
-
                         <div class="form-group <?php echo (!empty($nome_err)) ? 'has-error' : ''; ?>">
                             <label>Nome</label>
                             <input type="text" name="nome" class="form-control" value="<?php echo $nome; ?>">

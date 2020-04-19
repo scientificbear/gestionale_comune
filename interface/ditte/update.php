@@ -6,8 +6,8 @@ require_once "../utils.php";
 require_once "../config.php";
  
 // Define variables and initialize with empty values
-$id = $nome = $indirizzo = $cap = $comune = $provincia = $email = $telefono_ref = $nome_ref = $categoria = "";
-$id_err = $nome_err = $indirizzo_err = $cap_err = $comune_err = $provincia_err = $email_err = $telefono_ref_err = $nome_ref_err = $categoria_err = "";
+$nome = $indirizzo = $cap = $comune = $provincia = $email = $telefono_ref = $nome_ref = $categoria = "";
+$nome_err = $indirizzo_err = $cap_err = $comune_err = $provincia_err = $email_err = $telefono_ref_err = $nome_ref_err = $categoria_err = "";
  
 // Processing form data when form is submitted
 if(isset($_POST["id"]) && !empty($_POST["id"])){
@@ -15,7 +15,6 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
     $id = $_POST["id"];
     
     // Validate name
-    list($id, $id_err) = check_variable($_POST["id"], "id");
     list($nome, $nome_err) = check_variable($_POST["nome"], "nome");
     list($indirizzo, $indirizzo_err) = check_variable($_POST["indirizzo"], "indirizzo");
     list($comune, $comune_err) = check_variable($_POST["comune"], "comune");
