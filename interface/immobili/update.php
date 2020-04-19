@@ -1,19 +1,20 @@
 <?php
 
-require "../protect.php";
-require "../utils.php";
-
+require_once "../protect.php";
+require_once "../utils.php";
 // Include config file
-require "../config.php";
+require_once "../config.php";
  
 // Define variables and initialize with empty values
 $nome = $descrizione = $indirizzo = $cap = $circoscrizione = $codice = $id_tipologia = $telefono_ref = $nome_ref = "";
 $nome_err = $descrizione_err = $indirizzo_err = $cap_err = $circoscrizione_err = $codice_err = $id_tipologia_err = $telefono_ref_err = $nome_ref_err = "";
-
+ 
 // Processing form data when form is submitted
-if($_SERVER["REQUEST_METHOD"] == "POST"){
-
-    // Validate
+if(isset($_POST["id"]) && !empty($_POST["id"])){
+    // Get hidden input value
+    $id = $_POST["id"];
+    
+    // Validate name
     list($nome, $nome_err) = check_variable($_POST["nome"], "nome");
     list($indirizzo, $indirizzo_err) = check_variable($_POST["indirizzo"], "indirizzo");
     list($cap, $cap_err) = check_variable($_POST["cap"], "cap");
@@ -24,7 +25,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     $descrizione = trim($_POST["descrizione"]);
     $telefono_ref = trim($_POST["telefono_ref"]);
     $nome_ref = trim($_POST["nome_ref"]);
-
     // Check input errors before inserting in database
     $error_check = empty($nome_err) &&
     empty($descrizione_err) &&
@@ -37,24 +37,79 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     empty($nome_ref_err);
 
     if($error_check){
+        // Prepare an update statement
         $table = "immobili";
         $field = array("nome","descrizione","indirizzo","cap","circoscrizione","codice","id_tipologia","telefono_ref","nome_ref");
         $data = array($nome,$descrizione,$indirizzo,$cap,$circoscrizione,$codice,$id_tipologia,$telefono_ref,$nome_ref);
-        $result = insert_data($table,$field,$data,$mysqli);
-
+        
+        $result = update_data($table,$field,$data,$id,$mysqli);
+        var_dump($result);
+        // Attempt to execute the prepared statement
         if($result){
-            // Records created successfully. Redirect to landing page
+            // Records updated successfully. Redirect to landing page
             header("location: index.php");
             exit();
-
-           // Close connection
-            $mysqli->close();
-
+            // Close connection
+            $mysqli->close();            
         } else{
             echo "Something went wrong. Please try again later (", $mysqli->error, ")";
         }
     }
-    
+
+} else{
+    // Check existence of id parameter before processing further
+    if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
+        // Get URL parameter
+        $id =  trim($_GET["id"]);
+        
+        // Prepare a select statement
+        $sql = "SELECT * FROM immobili WHERE id = ?";
+        if($stmt = $mysqli->prepare($sql)){
+            // Bind variables to the prepared statement as parameters
+            $stmt->bind_param("i", $param_id);
+            
+            // Set parameters
+            $param_id = $id;
+            
+            // Attempt to execute the prepared statement
+            if($stmt->execute()){
+                $result = $stmt->get_result();
+                
+                if($result->num_rows == 1){
+                    /* Fetch result row as an associative array. Since the result set contains only one row, we don't need to use while loop */
+                    $row = $result->fetch_array(MYSQLI_ASSOC);
+                    
+                    // Retrieve individual field value
+                    $id = $row["id"];
+                    $nome = $row["nome"];
+                    $descrizione = $row["descrizione"];
+                    $indirizzo = $row["indirizzo"];
+                    $cap = $row["cap"];
+                    $circoscrizione = $row["circoscrizione"];
+                    $codice = $row["codice"];
+                    $id_tipologia = $row["id_tipologia"];
+                    $telefono_ref = $row["telefono_ref"];
+                    $nome_ref = $row["nome_ref"];
+
+                } else{
+                    // URL doesn't contain valid id. Redirect to error page
+                    header("location: error.php");
+                    exit();
+                }
+                
+            } else{
+                echo "Something went wrong. Please try again later (", $mysqli->error, ")";
+            }
+        }
+        
+        // Close statement
+        $stmt->close();
+        
+    }  else{
+        // URL doesn't contain id parameter. Redirect to error page
+        header("location: error.php");
+        exit();
+    }
 }
 ?>
  
@@ -62,7 +117,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Create Record</title>
+    <title>Aggiorna immobile</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
     <style type="text/css">
         .wrapper{
@@ -70,9 +125,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             margin: 0 auto;
         }
     </style>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js" type="text/javascript"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.12/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.12/js/select2.min.js"></script>
 
     <script type="text/javascript">
     $(document).ready(function(){
@@ -98,11 +150,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             <div class="row">
                 <div class="col-md-12">
                     <div class="page-header">
-                        <h2>Crea immobile</h2>
+                        <h2>Update Record</h2>
                     </div>
-                    <p>Please fill this form and submit to add employee record to the database.</p>
-                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-                        <div class="form-group <?php echo (!empty($nome_err)) ? 'has-error' : ''; ?>">
+                    <p>Please edit the input values and submit to update the record.</p>
+                    <form action="<?php echo htmlspecialchars(basename($_SERVER['REQUEST_URI'])); ?>" method="post">
+                    <div class="form-group <?php echo (!empty($nome_err)) ? 'has-error' : ''; ?>">
                             <label>nome</label>
                             <input type="text" name="nome" class="form-control" value="<?php echo $nome; ?>">
                             <span class="help-block"><?php echo $nome_err;?></span>
@@ -154,6 +206,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             } else{
                                 echo "ERROR: Non riesco ad eseguire $sql. " . $mysqli->error;
                             }
+                            
+                            $mysqli->close();
                             ?>
                             <br />
                             <div id='result'></div>
@@ -170,6 +224,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             <span class="help-block"><?php echo $nome_ref_err;?></span>
                         </div>
 
+                        <input type="hidden" name="id" value="<?php echo $id; ?>"/>
                         <input type="submit" class="btn btn-primary" value="Invia">
                         <a href="index.php" class="btn btn-default">Annulla</a>
                     </form>

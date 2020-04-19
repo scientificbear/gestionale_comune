@@ -27,12 +27,9 @@ function insert_data($table,$field,$data,$mysqli)
 
 function update_data($table,$field,$data,$id,$mysqli)
     {
-        error_log("update_data");
         $set_values = "";
-        error_log($set_values);
         foreach (array_combine($field, $data) as $key => $value){
             $set_values = $set_values." ".$key."='".$mysqli->real_escape_string($value)."',";
-            error_log($set_values);
         }
 
         $sql= "UPDATE $table SET".rtrim($set_values, ",")." WHERE id=".$id.";";

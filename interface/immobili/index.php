@@ -43,7 +43,7 @@ require_once "../protect.php";
                     require_once "../config.php";
                     
                     // Attempt select query execution
-                    $sql = "SELECT * FROM immobili i LEFT JOIN tipo_immobili ti ON i.id_tipologia=ti.id";
+                    $sql = "SELECT i.*, ti.tipologia FROM immobili i LEFT JOIN tipo_immobili ti ON i.id_tipologia=ti.id ORDER BY i.id";
                     if($result = $mysqli->query($sql)){
                         if($result->num_rows > 0){
                             echo "<table class='table table-bordered table-striped'>";
