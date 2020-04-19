@@ -20,6 +20,8 @@ require_once "protect.php";
     <ul>
     <li><a href="ditte/">ditte</a></li>
     <li><a href="tipo_immobili/">tipo immobili</a></li>
+    <li><a href="tipo_immobili/">immobili</a></li>
+    <li><a href="tipo_immobili/">interventi</a></li>
     </ul>
     <p>
         <a href="reset-password.php" class="btn btn-warning">Reset Your Password</a>
