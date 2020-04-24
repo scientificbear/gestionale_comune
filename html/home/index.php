@@ -1,15 +1,19 @@
+<?php
+require_once "../general/protect.php";
+?>
+ 
 <!DOCTYPE html>
 <html dir="ltr" lang="it">
 
 <head>
-    <?php include "head.php"; ?>
+    <?php include "../general/head.php"; ?>
 </head>
 
 <body>
     <!-- ============================================================== -->
     <!-- Preloader - style you can find in spinners.css -->
     <!-- ============================================================== -->
-    <?php include "preloader.php"; ?>
+    <?php include "../general/preloader.php"; ?>
     <!-- ============================================================== -->
     <!-- Main wrapper - style you can find in pages.scss -->
     <!-- ============================================================== -->
@@ -18,14 +22,14 @@
         <!-- ============================================================== -->
         <!-- Topbar header - style you can find in pages.scss -->
         <!-- ============================================================== -->
-        <?php include "page_header.php"; ?>
+        <?php include "../general/page_header.php"; ?>
         <!-- ============================================================== -->
         <!-- End Topbar header -->
         <!-- ============================================================== -->
         <!-- ============================================================== -->
         <!-- Left Sidebar - style you can find in sidebar.scss  -->
         <!-- ============================================================== -->
-        <?php include "sidebar.php"; ?>
+        <?php include "../general/sidebar.php"; ?>
         <!-- ============================================================== -->
         <!-- End Left Sidebar - style you can find in sidebar.scss  -->
         <!-- ============================================================== -->
@@ -39,7 +43,7 @@
             <div class="page-breadcrumb">
                 <div class="row">
                     <div class="col-7 align-self-center">
-                        <h3 class="page-title text-truncate text-dark font-weight-medium mb-1">Good Morning Jason!</h3>
+                        <h3 class="page-title text-truncate text-dark font-weight-medium mb-1">Ciao <?php echo htmlspecialchars($_SESSION["nome"]); ?> <?php echo htmlspecialchars($_SESSION["cognome"]); ?>!</h3>
                         <div class="d-flex align-items-center">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb m-0 p-0">
@@ -108,7 +112,7 @@
             <!-- ============================================================== -->
             <!-- footer -->
             <!-- ============================================================== -->
-            <?php include "page_footer.php"; ?>
+            <?php include "../general/page_footer.php"; ?>
             <!-- ============================================================== -->
             <!-- End footer -->
             <!-- ============================================================== -->
@@ -124,7 +128,7 @@
     <!-- ============================================================== -->
     <!-- All Jquery -->
     <!-- ============================================================== -->
-    <?php include "footer.php"; ?>
+    <?php include "../general/footer.php"; ?>
 </body>
 
 </html>

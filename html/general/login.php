@@ -4,7 +4,7 @@ session_start();
  
 // Check if the user is already logged in, if yes then redirect him to welcome page
 if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
-    header("location: index.php");
+    header("location: ../home/index.php");
     exit;
 }
  
@@ -66,7 +66,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             $_SESSION["cognome"] = $cognome;
                             
                             // Redirect user to welcome page
-                            header("location: index.php");
+                            header("location: ../home/index.php");
                         } else{
                             // Display an error message if password is not valid
                             $password_err = "Password non valida.";
@@ -116,14 +116,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         <!-- Login box.scss -->
         <!-- ============================================================== -->
         <div class="auth-wrapper d-flex no-block justify-content-center align-items-center position-relative"
-            style="background:url(../assets/images/big/auth-bg.jpg) no-repeat center center;">
+            style="background:url(../../assets/images/big/auth-bg.jpg) no-repeat center center;">
             <div class="auth-box row">
-                <div class="col-lg-7 col-md-5 modal-bg-img" style="background-image: url(../assets/images/big/2.jpeg);">
+                <div class="col-lg-7 col-md-5 modal-bg-img" style="background-image: url(../../assets/images/big/2.jpeg);">
                 </div>
                 <div class="col-lg-5 col-md-7 bg-white">
                     <div class="p-3">
                         <div class="text-center">
-                            <img src="../assets/images/big/icon.png" alt="wrapkit">
+                            <img src="../../assets/images/big/icon.png" alt="wrapkit">
                         </div>
                         <h2 class="mt-3 text-center">Log In</h2>
                         <p class="text-center">Inserisci il tuo indirizzo email per accedere.</p>
@@ -161,10 +161,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     <!-- ============================================================== -->
     <!-- All Required js -->
     <!-- ============================================================== -->
-    <script src="../assets/libs/jquery/dist/jquery.min.js "></script>
+    <script src="../../assets/libs/jquery/dist/jquery.min.js "></script>
     <!-- Bootstrap tether Core JavaScript -->
-    <script src="../assets/libs/popper.js/dist/umd/popper.min.js "></script>
-    <script src="../assets/libs/bootstrap/dist/js/bootstrap.min.js "></script>
+    <script src="../../assets/libs/popper.js/dist/umd/popper.min.js "></script>
+    <script src="../../assets/libs/bootstrap/dist/js/bootstrap.min.js "></script>
     <!-- ============================================================== -->
     <!-- This page plugin js -->
     <!-- ============================================================== -->
