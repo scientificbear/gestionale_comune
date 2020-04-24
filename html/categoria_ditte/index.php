@@ -44,7 +44,7 @@ require_once "../general/protect.php";
             <!-- ============================================================== -->
             <div class="page-breadcrumb">
                 <div class="row">
-                <div class="col-7 align-self-center">
+                    <div class="col-7 align-self-center">
                         <h4 class="page-title text-truncate text-dark font-weight-medium mb-1">Categorie ditta</h4>
                         <div class="d-flex align-items-center">
                             <nav aria-label="breadcrumb">
@@ -53,6 +53,11 @@ require_once "../general/protect.php";
                                     <li class="breadcrumb-item text-muted active" aria-current="page">Categoria ditta</li>
                                 </ol>
                             </nav>
+                        </div>
+                    </div>
+                    <div class="col-5 align-self-center">
+                        <div class="customize-input float-right">
+                            <a href="create.php" class="btn btn-success btn-circle-lg"><i class="fa fa-plus"></i></a>
                         </div>
                     </div>
                 </div>

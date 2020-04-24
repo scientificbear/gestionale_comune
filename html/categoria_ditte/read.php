@@ -40,9 +40,7 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
      
     // Close statement
     $stmt->close();
-    
-    // Close connection
-    $mysqli->close();
+
 } else{
     // URL doesn't contain id parameter. Redirect to error page
     header("location: ../general/error.php");
@@ -92,8 +90,8 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
             <!-- ============================================================== -->
             <div class="page-breadcrumb">
                 <div class="row">
-                <div class="col-7 align-self-center">
-                        <h4 class="page-title text-truncate text-dark font-weight-medium mb-1">Inserisci una nuova categoria</h4>
+                    <div class="col-7 align-self-center">
+                        <h4 class="page-title text-truncate text-dark font-weight-medium mb-1">Visualizza categoria</h4>
                         <div class="d-flex align-items-center">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb m-0 p-0">
@@ -102,6 +100,12 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
                                     <li class="breadcrumb-item text-muted active" aria-current="page">Vedi</li>
                                 </ol>
                             </nav>
+                        </div>
+                    </div>
+                    <div class="col-5 align-self-center">
+                        <div class="customize-input float-right">
+                            <a href="<?php echo 'update.php?id='.$row["id"]?>" class="btn btn-secondary btn-circle-lg"><i class="fa fas fa-edit"></i></a>
+                            <a href="<?php echo 'delete.php?id='.$row["id"]?>" class="btn btn-danger btn-circle-lg"><i class="fa fa-trash-alt"></i></a>
                         </div>
                     </div>
                 </div>
@@ -117,14 +121,70 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
                 <!-- Start Top Leader Table -->
                 <!-- *************************************************************** -->
                 <div class="row">
-                <div class="col-12">
+                    <div class="col-12">
                         <div class="card">
-                            <div class="card-body col-md-6 m-auto">
-                                <h4 class="card-title">ID</h4>
-                                <p class="card-text"><?php echo $row["id"]; ?></p>
-                                <br/>
-                                <h4 class="card-title">Categoria</h4>
-                                <p class="card-text"><?php echo $row["categoria"]; ?></p>
+                            <div class="card-body">
+                                <h3>Record</h3>
+                                <br />
+                                <div class="col-md-6 m-auto">
+                                    <h4 class="card-title">ID</h4>
+                                    <p class="card-text"><?php echo $row["id"]; ?></p>
+                                    <br/>
+                                    <h4 class="card-title">Categoria</h4>
+                                    <p class="card-text"><?php echo $row["categoria"]; ?></p>
+                                <div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h3>Ditte associate</h3>
+                                <br />
+                                <div class="table-responsive">
+                                <?php                                
+                                // Attempt select query execution
+                                $sql = "SELECT * FROM ditte WHERE id_categoria = " . $row["id"] . " ORDER BY nome";
+                                if($result = $mysqli->query($sql)){
+                                    if($result->num_rows > 0){
+                                    echo '<table id="zero_config" class="table table-striped table-bordered no-wrap">';
+                                    echo "<thead>";
+                                    echo "<tr>";
+                                    echo "<th>#</th>";
+                                    echo "<th>Nome</th>";
+                                    echo "<th>Indirizzo</th>";
+                                    echo "<th>Comune</th>";
+                                    echo "<th>Provincia</th>";
+                                    echo "</tr>";
+                                    echo "</thead>";
+                                    echo "<tbody>";
+                                    while($det_row = $result->fetch_array()){
+                                        echo "<tr>";
+                                        echo "<td>" . $det_row['id'] . "</td>";
+                                        echo "<td>" . $det_row['nome'] . "</td>";
+                                        echo "<td>" . $det_row['indirizzo'] . "</td>";
+                                        echo "<td>" . $det_row['comune'] . "</td>";
+                                        echo "<td>" . $det_row['provincia'] . "</td>";
+                                        echo "</tr>";
+                                    }
+                                    echo "</tbody>";                            
+                                echo "</table>";
+                                // Free result set
+                                $result->free();
+                            } else{
+                                echo "<p class='lead'><em>Nessun risultato trovato.</em></p>";
+                            }
+                        } else{
+                            echo "ERROR: Non riesco ad eseguire $sql. " . $mysqli->error;
+                        }
+                        
+                        // Close connection
+                        $mysqli->close();
+                        ?>
+                                </div>
                             </div>
                         </div>
                     </div>
