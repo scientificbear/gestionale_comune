@@ -227,7 +227,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                                         ?>
                                         <div id='result'></div>
                                     <div class="invalid-feedback">
-                                        <?php echo $id_tipologia_err;?>
+                                        <?php echo $id_categoria_err;?>
                                     </div>
                                 </div>
                                 <br />

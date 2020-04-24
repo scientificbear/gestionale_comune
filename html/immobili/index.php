@@ -120,7 +120,7 @@ require_once "../general/protect.php";
                                 // Free result set
                                 $result->free();
                             } else{
-                                echo "<p class='lead'><em>Nessun risultato trovato.</em></p>";
+                                echo "<p><em>Nessun risultato trovato.</em></p>";
                             }
                         } else{
                             echo "ERROR: Non riesco ad eseguire $sql. " . $mysqli->error;
