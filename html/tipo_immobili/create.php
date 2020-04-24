@@ -109,9 +109,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 <div class="col-12">
                         <div class="card">
                             <div class="card-body col-md-6 m-auto">
-                                <h4 class="card-title">Tipologia</h4>
                                 <form class="mt-4" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                                     <div class="form-group">
+                                        <h5 class="card-title">Tipologia</h5>
                                         <input type="text" name="tipologia" class="form-control" value="<?php echo $tipologia; ?>">
                                         <div class="invalid-feedback">
                                             <?php echo $tipologia_err;?>

@@ -127,10 +127,10 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
                                 <h3>Record</h3>
                                 <br />
                                 <div class="col-md-6 m-auto">
-                                    <h4 class="card-title">ID</h4>
+                                    <h5 class="card-title">ID</h5>
                                     <p class="card-text"><?php echo $row["id"]; ?></p>
                                     <br/>
-                                    <h4 class="card-title">Tipologia</h4>
+                                    <h5 class="card-title">Tipologia</h5>
                                     <p class="card-text"><?php echo $row["tipologia"]; ?></p>
                                 </div>
                             </div>

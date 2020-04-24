@@ -154,10 +154,10 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                             <div class="card-body col-md-6 m-auto">
                                 <h3>Sei sicuro di voler eliminare definitivamente questo record?</h3>
                                 <br />
-                                <h4 class="card-title">ID</h4>
+                                <h5 class="card-title">ID</h5>
                                 <p class="card-text"><?php echo $row["id"]; ?></p>
                                 <br/>
-                                <h4 class="card-title">Categoria</h4>
+                                <h5 class="card-title">Categoria</h5>
                                 <p class="card-text"><?php echo $row["categoria"]; ?></p>
                                 <br />
                                 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">

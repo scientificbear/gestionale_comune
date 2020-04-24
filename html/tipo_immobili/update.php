@@ -161,13 +161,13 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                         <div class="card">
                             <div class="card-body col-md-6 m-auto">
                             <form class="mt-4" action="<?php echo htmlspecialchars(basename($_SERVER['REQUEST_URI'])); ?>" method="post">
-                                    <h4 class="card-title">ID</h4>
                                     <div class="form-group">
+                                        <h5 class="card-title">ID</h5>
                                         <input type="text" class="form-control" name="id" readonly value="<?php echo $id; ?>">
                                     </div>
                                     <br />
-                                    <h4 class="card-title">tipologia</h4>
                                     <div class="form-group">
+                                        <h5 class="card-title">tipologia</h5>
                                         <input type="text" name="tipologia" class="form-control" value="<?php echo $tipologia; ?>">
                                         <div class="invalid-feedback">
                                             <?php echo $tipologia_err;?>
