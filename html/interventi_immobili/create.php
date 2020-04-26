@@ -46,6 +46,24 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             echo "Something went wrong. Please try again later (", $mysqli->error, ")";
         }
     }
+} else {
+    if($_SERVER["REQUEST_METHOD"] == "GET"){
+        $sql = "SELECT max(id) AS id FROM interventi_immobili";
+        if($result = $mysqli->query($sql)){
+            if($result->num_rows == 1){
+                $row = $result->fetch_array(MYSQLI_ASSOC);
+                if (is_numeric($row["id"])){
+                    $id = $row["id"] + 1;
+                }
+            } else{
+                header("location: ../general/error.php");
+                exit();
+            }       
+        } else {
+            echo "ERROR: Non riesco ad eseguire $sql. " . $mysqli->error;
+        }
+
+    }
 }
 ?>
  
