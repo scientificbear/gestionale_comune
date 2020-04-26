@@ -188,7 +188,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                                     </div>
                                 </div>
                                 <div class="col-lg-12 text-center">
-                                    <button type="submit" class="btn btn-block btn-dark">Sign In</button>
+                                    <button type="submit" class="btn btn-block btn-dark">Registra</button>
+                                    <a href="../home/index.php" class="btn btn-block btn-dark">Annulla</a>
                                 </div>
                             </div>
                         </form>
