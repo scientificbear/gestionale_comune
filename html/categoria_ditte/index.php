@@ -1,5 +1,6 @@
 <?php
 require_once "../general/protect.php";
+require_once "../general/utils.php";
 ?>
  
 <!DOCTYPE html>
@@ -57,7 +58,8 @@ require_once "../general/protect.php";
                     </div>
                     <div class="col-5 align-self-center">
                         <div class="customize-input float-right">
-                            <a href="create.php" class="btn btn-success btn-circle-lg"><i class="fa fa-plus"></i></a>
+                            <?php protect_content('<a href="create.php" class="btn btn-success btn-circle-lg"><i class="fa fa-plus"></i></a>',
+                            $_SESSION["role"], array("admin", "editor")) ?>
                         </div>
                     </div>
                 </div>
@@ -98,9 +100,12 @@ require_once "../general/protect.php";
                                         echo "<tr>";
                                         echo "<td>" . $row['id'] . "</td>";
                                         echo "<td>" . $row['categoria'] . "</td>";
-                                        echo "<td><a href='read.php?id=". $row['id'] ."' title='Vedi Record'><i class='fas fa-eye'></i></a><span> - </span>";
-                                        echo "<a href='update.php?id=". $row['id'] ."' title='Aggiorna Record'><i class='fas fa-edit'></i></a><span> - </span>";
-                                        echo "<a href='delete.php?id=". $row['id'] ."' title='Elimina Record'><i class='fas fa-trash-alt'></i></a></td>";
+                                        echo "<td><a href='read.php?id=". $row['id'] ."' title='Vedi Record'><i class='fas fa-eye'></i></a>";
+                                        protect_content("<span> - </span><a href='update.php?id=". $row['id'] ."' title='Aggiorna Record'><i class='fas fa-edit'></i></a>",
+                                        $_SESSION["role"], array("admin", "editor"));
+                                        protect_content("<span> - </span><a href='delete.php?id=". $row['id'] ."' title='Elimina Record'><i class='fas fa-edit'></i></a>",
+                                        $_SESSION["role"], array("admin", "editor"));
+                                        echo "</td>";
                                         echo "</tr>";
                                     }
                                     echo "</tbody>";                            

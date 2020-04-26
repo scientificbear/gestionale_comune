@@ -1,6 +1,7 @@
 <?php
 
 require_once "../general/protect.php";
+require_once "../general/utils.php";
 // Check existence of id parameter before processing further
 if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
     // Include config file
@@ -104,8 +105,10 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
                     </div>
                     <div class="col-5 align-self-center">
                         <div class="customize-input float-right">
-                            <a href="<?php echo 'update.php?id='.$row["id"]?>" class="btn btn-secondary btn-circle-lg"><i class="fa fas fa-edit"></i></a>
-                            <a href="<?php echo 'delete.php?id='.$row["id"]?>" class="btn btn-danger btn-circle-lg"><i class="fa fa-trash-alt"></i></a>
+                        <?php protect_content('<a href="update.php?id='.$row["id"].'" class="btn btn-secondary btn-circle-lg"><i class="fa fas fa-edit"></i></a>',
+                            $_SESSION["role"], array("admin", "editor")) ?>
+                        <?php protect_content('<a href="delete.php?id='.$row["id"].'" class="btn btn-danger btn-circle-lg"><i class="fa fas fa-edit"></i></a>',
+                            $_SESSION["role"], array("admin", "editor")) ?>
                         </div>
                     </div>
                 </div>

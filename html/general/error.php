@@ -1,30 +1,65 @@
+<?php
+// Initialize the session
+require_once "protect.php";
+
+?>
+
+
 <!DOCTYPE html>
-<html lang="en">
+<html dir="ltr">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Error</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
-    <style type="text/css">
-        .wrapper{
-            width: 750px;
-            margin: 0 auto;
-        }
-    </style>
+    <?php include "head.php"; ?>
 </head>
+
 <body>
-    <div class="wrapper">
-        <div class="container-fluid">
-        <div class="row">
-                <div class="col-md-12">
-                    <div class="page-header">
-                        <h1>Invalid Request</h1>
-                    </div>
-                    <div class="alert alert-danger fade in">
-                        <p>Sorry, you've made an invalid request. Please <a href="index.php" class="alert-link">go back</a> and try again.</p>
+    <div class="main-wrapper">
+        <!-- ============================================================== -->
+        <!-- Preloader - style you can find in spinners.css -->
+        <!-- ============================================================== -->
+        <div class="preloader">
+            <div class="lds-ripple">
+                <div class="lds-pos"></div>
+                <div class="lds-pos"></div>
+            </div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- Preloader - style you can find in spinners.css -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Login box.scss -->
+        <!-- ============================================================== -->
+        <div class="auth-wrapper d-flex no-block justify-content-center align-items-center position-relative"
+            style="background:url(../../assets/images/big/auth-bg.jpg) no-repeat center center;">
+            <div class="auth-box row">
+                <div class="col-lg-7 col-md-5 modal-bg-img" style="background-image: url(../../assets/images/big/2.jpeg);">
+                </div>
+                <div class="col-lg-5 col-md-7 bg-white">
+                    <div class="p-3">
+                        <h2 class="mt-3 text-center">Errore</h2>
+                        <p>Torna alla <a href="../home/index.php">home page</a></p>
+
                     </div>
                 </div>
-            </div>        
+            </div>
         </div>
+        <!-- ============================================================== -->
+        <!-- Login box.scss -->
+        <!-- ============================================================== -->
     </div>
+    <!-- ============================================================== -->
+    <!-- All Required js -->
+    <!-- ============================================================== -->
+    <script src="../../assets/libs/jquery/dist/jquery.min.js "></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="../../assets/libs/popper.js/dist/umd/popper.min.js "></script>
+    <script src="../../assets/libs/bootstrap/dist/js/bootstrap.min.js "></script>
+    <!-- ============================================================== -->
+    <!-- This page plugin js -->
+    <!-- ============================================================== -->
+    <script>
+        $(".preloader ").fadeOut();
+    </script>
 </body>
+
 </html>

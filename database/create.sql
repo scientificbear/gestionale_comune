@@ -56,7 +56,8 @@ CREATE TABLE `utenti` (
   `cognome` varchar(255),
   `email` varchar(255) NOT NULL UNIQUE,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `password` varchar(255)
+  `password` varchar(255),
+  `role` varchar(255)
 );
 
 CREATE TABLE `festivita` (

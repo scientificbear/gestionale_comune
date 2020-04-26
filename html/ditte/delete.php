@@ -1,5 +1,7 @@
 <?php
 require_once "../general/protect.php";
+require_once "../general/utils.php";
+check_user($_SESSION["role"], array("admin", "editor"));
 
 // Process delete operation after confirmation
 if(isset($_POST["id"]) && !empty($_POST["id"])){

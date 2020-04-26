@@ -37,4 +37,11 @@ function update_data($table,$field,$data,$id,$mysqli)
 
         return $mysqli->query($sql);
     }
+
+function protect_content($content, $this_role, $allowed_list){
+        if(in_array($this_role, $allowed_list)){
+            echo $content;
+        }
+    }
+
 ?>
