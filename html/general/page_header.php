@@ -63,12 +63,9 @@
                                         class="svg-icon"></i></span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
-                                <a class="dropdown-item" href="javascript:void(0)"><i data-feather="user"
+                                <a class="dropdown-item" href="../general/reset-password.php"><i data-feather="settings"
                                         class="svg-icon mr-2 ml-1"></i>
-                                    My Profile</a>
-                                <a class="dropdown-item" href="javascript:void(0)"><i data-feather="settings"
-                                        class="svg-icon mr-2 ml-1"></i>
-                                    Account Setting</a>
+                                    Reset password</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="../general/logout.php"><i data-feather="power"
                                         class="svg-icon mr-2 ml-1"></i>

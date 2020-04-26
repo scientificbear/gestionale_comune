@@ -1,5 +1,6 @@
 <?php
 require_once "../general/protect.php";
+require_once "../general/config.php";
 ?>
  
 <!DOCTYPE html>
@@ -47,19 +48,10 @@ require_once "../general/protect.php";
                         <div class="d-flex align-items-center">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb m-0 p-0">
-                                    <li class="breadcrumb-item"><a href="index.html">Dashboard</a>
+                                    <li class="breadcrumb-item"><a href="index.html">Home</a>
                                     </li>
                                 </ol>
                             </nav>
-                        </div>
-                    </div>
-                    <div class="col-5 align-self-center">
-                        <div class="customize-input float-right">
-                            <select class="custom-select custom-select-set form-control bg-white border-0 custom-shadow custom-radius">
-                                <option selected>Aug 19</option>
-                                <option value="1">July 19</option>
-                                <option value="2">Jun 19</option>
-                            </select>
                         </div>
                     </div>
                 </div>
@@ -75,29 +67,63 @@ require_once "../general/protect.php";
                 <!-- Start Top Leader Table -->
                 <!-- *************************************************************** -->
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col-sm-12 col-md-6 col-lg-4">
                         <div class="card">
                             <div class="card-body">
-                                <div class="d-flex align-items-center mb-4">
-                                    <h4 class="card-title">Titolo</h4>
-                                    <div class="ml-auto">
-                                        <div class="dropdown sub-dropdown">
-                                            <button class="btn btn-link text-muted dropdown-toggle" type="button"
-                                                id="dd1" data-toggle="dropdown" aria-haspopup="true"
-                                                aria-expanded="false">
-                                                <i data-feather="more-vertical"></i>
-                                            </button>
-                                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dd1">
-                                                <a class="dropdown-item" href="#">Insert</a>
-                                                <a class="dropdown-item" href="#">Update</a>
-                                                <a class="dropdown-item" href="#">Delete</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div>
-                                <p>Testo</p>
-                                </div>
+                                <h4 class="card-title">Interventi segnalati</h4>
+                                <?php $sql = "SELECT count(*) AS c from interventi_immobili";
+                                    if($result = $mysqli->query($sql)){
+                                        if($result->num_rows == 1){
+                                            $row = $result->fetch_array(MYSQLI_ASSOC);
+                                            echo "<h1 class='text-center'>".$row["c"]."</h1>";
+                                        } else{
+                                            header("location: ../general/error.php");
+                                            exit();
+                                        }       
+                                    } else {
+                                        echo "ERROR: Non riesco ad eseguire $sql. " . $mysqli->error;
+                                    }
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Immobili</h4>
+                                <?php $sql = "SELECT count(*) AS c from immobili";
+                                    if($result = $mysqli->query($sql)){
+                                        if($result->num_rows == 1){
+                                            $row = $result->fetch_array(MYSQLI_ASSOC);
+                                            echo "<h1 class='text-center'>".$row["c"]."</h1>";
+                                        } else{
+                                            header("location: ../general/error.php");
+                                            exit();
+                                        }       
+                                    } else {
+                                        echo "ERROR: Non riesco ad eseguire $sql. " . $mysqli->error;
+                                    }
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Ditte</h4>
+                                <?php $sql = "SELECT count(*) AS c from ditte";
+                                    if($result = $mysqli->query($sql)){
+                                        if($result->num_rows == 1){
+                                            $row = $result->fetch_array(MYSQLI_ASSOC);
+                                            echo "<h1 class='text-center'>".$row["c"]."</h1>";
+                                        } else{
+                                            header("location: ../general/error.php");
+                                            exit();
+                                        }       
+                                    } else {
+                                        echo "ERROR: Non riesco ad eseguire $sql. " . $mysqli->error;
+                                    }
+                                ?>
                             </div>
                         </div>
                     </div>
