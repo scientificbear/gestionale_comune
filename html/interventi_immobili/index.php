@@ -108,6 +108,7 @@ require_once "../general/protect.php";
                                         echo "<td>".$row['nome_immobile']." (".$row['indirizzo'].")</td>";
                                         echo "<td>".$row['nome_ditta']." (".$row['email'].")</td>";
                                         echo "<td><a href='read.php?id=". $row['id'] ."' title='Vedi Record'><i class='fas fa-eye'></i></a><span> - </span>";
+                                        echo "<a href='print.php?id=". $row['id'] ."' title='Stampa Record'><i class='fas fa-print'></i></a><span> - </span>";
                                         echo "<a href='update.php?id=". $row['id'] ."' title='Aggiorna Record'><i class='fas fa-edit'></i></a><span> - </span>";
                                         echo "<a href='delete.php?id=". $row['id'] ."' title='Elimina Record'><i class='fas fa-trash-alt'></i></a></td>";
                                         echo "</tr>";

@@ -116,6 +116,7 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
                     </div>
                     <div class="col-5 align-self-center">
                         <div class="customize-input float-right">
+                            <a href="<?php echo 'print.php?id='.$row["id"]?>" class="btn btn-secondary btn-circle-lg"><i class="fa fas fa-print"></i></a>
                             <a href="<?php echo 'update.php?id='.$row["id"]?>" class="btn btn-secondary btn-circle-lg"><i class="fa fas fa-edit"></i></a>
                             <a href="<?php echo 'delete.php?id='.$row["id"]?>" class="btn btn-danger btn-circle-lg"><i class="fa fa-trash-alt"></i></a>
                         </div>
