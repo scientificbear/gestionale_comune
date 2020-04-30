@@ -93,7 +93,6 @@ require_once "../general/utils.php";
                                     echo "<tr>";
                                     echo "<th>#</th>";
                                     echo "<th>Denominazione</th>";
-                                    echo "<th>Indirizzo</th>";
                                     echo "<th>Comune</th>";
                                     echo "<th>Email</th>";
                                     echo "<th>Categoria</th>";
@@ -105,14 +104,13 @@ require_once "../general/utils.php";
                                         echo "<tr>";
                                         echo "<td>" . $row['id'] . "</td>";
                                         echo "<td>" . $row['nome'] . "</td>";
-                                        echo "<td>" . $row['indirizzo'] . "</td>";
                                         echo "<td>" . $row['comune'] . " (".$row['provincia'].")</td>";
                                         echo "<td>" . $row['email'] . "</td>";
                                         echo "<td>" . $row['categoria'] . "</td>";
                                                 echo "<td><a href='read.php?id=". $row['id'] ."' title='Vedi Record'><i class='fas fa-eye'></i></a>";
                                         protect_content("<span> - </span><a href='update.php?id=". $row['id'] ."' title='Aggiorna Record'><i class='fas fa-edit'></i></a>",
                                         $_SESSION["role"], array("admin", "editor"));
-                                        protect_content("<span> - </span><a href='delete.php?id=". $row['id'] ."' title='Elimina Record'><i class='fas fa-edit'></i></a>",
+                                        protect_content("<span> - </span><a href='delete.php?id=". $row['id'] ."' title='Elimina Record'><i class='fas fa-trash-alt'></i></a>",
                                         $_SESSION["role"], array("admin", "editor"));
                                         echo "</td>";
                                         echo "</tr>";

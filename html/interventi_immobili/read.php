@@ -150,14 +150,14 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
                                     <p class="card-text"><?php echo $row["descrizione"]; ?></p>
                                     <br/>
                                     <h5 class="card-title">Immobile</h5>
-                                    <p class="card-text"><?php echo $row["immobile"]; ?></p>
+                                    <p class="card-text"><?php echo $row["nome_immobile"]; ?></p>
                                     <br/>
                                     <h5 class="card-title">Indirizzo</h5>
                                     <p class="card-text"><?php echo $row["indirizzo"]; ?></p>
                                 </div>
                                 <div class="col-md-6">
                                     <h5 class="card-title">Ditta</h5>
-                                    <p class="card-text"><?php echo $row["ditta"]; ?></p>
+                                    <p class="card-text"><?php echo $row["nome_ditta"]; ?></p>
                                     <br/>
                                     <h5 class="card-title">Email</h5>
                                     <p class="card-text"><?php echo $row["email"]; ?></p>
