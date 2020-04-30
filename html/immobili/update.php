@@ -244,7 +244,19 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                                 <br />
                                 <div class="form-group">
                                     <h5 class="card-title">Circoscrizione</h5>
-                                    <input type="text" name="circoscrizione" class="form-control" value="<?php echo $circoscrizione; ?>">
+                                    <select name="circoscrizione" class="form-control" value="<?php echo $circoscrizione; ?>">
+                                    <option selected='true' disabled='disabled'>Circoscrizione</option>
+                                    <?php
+                                        $circ_values = array("1", "2", "3", "4", "5", "6", "7", "8");
+                                        foreach ($circ_values as $c){
+                                            if ($c==$circoscrizione){
+                                                echo "<option value='".$c."'selected>".$c."</option>";
+                                            } else {
+                                                echo "<option value='".$c."'>".$c."</option>";
+                                            }
+                                        }
+                                        ?>
+                                    </select>
                                     <div class="invalid-feedback">
                                         <?php echo $circoscrizione_err;?>
                                     </div>
