@@ -75,6 +75,13 @@ CREATE TABLE `assenze` (
   `last_modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
+
+CREATE TABLE `utenti_circoscrizioni` (
+  `id_utente` int NOT NULL,
+  `circoscrizione` INT NOT NULL,
+  PRIMARY KEY (`id_utente`, `circoscrizione`)
+);
+
 CREATE TABLE `ditte_circoscrizioni` (
   `id_ditta` int NOT NULL,
   `circoscrizione` INT NOT NULL,
