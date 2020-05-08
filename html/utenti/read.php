@@ -31,7 +31,7 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
                 
                 $sql_circ = "SELECT * FROM utenti_circoscrizioni WHERE id_utente = ".$row["id"];
                 if($result_circ = $mysqli->query($sql_circ)){
-                    if($result->num_rows > 0){
+                    if($result_circ->num_rows > 0){
                         while($row_circ = $result_circ->fetch_array()){
                             $circ[$row_circ["circoscrizione"]] = True;
                         }

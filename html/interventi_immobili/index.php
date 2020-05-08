@@ -85,7 +85,8 @@ require_once "../general/protect.php";
                                 $sql = "SELECT ii.*, i.nome AS nome_immobile, i.indirizzo, d.nome AS nome_ditta, d.email
                                 FROM interventi_immobili ii
                                 LEFT JOIN immobili i ON ii.id_immobile=i.id
-                                LEFT JOIN ditte d ON ii.id_ditta=d.id";
+                                LEFT JOIN ditte d ON ii.id_ditta=d.id
+                                WHERE i.circoscrizione IN ".$_SESSION["allowed_circ"];
                                 if($result = $mysqli->query($sql)){
                                     if($result->num_rows > 0){
                                     echo '<table id="zero_config" class="table table-striped table-bordered no-wrap">';

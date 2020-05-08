@@ -161,7 +161,8 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
                                 </script>
                                 <?php                                
                                 // Attempt select query execution
-                                $sql = "SELECT * FROM immobili WHERE id_tipologia = " . $row["id"];
+                                $sql = "SELECT * FROM immobili
+                                WHERE circoscrizione IN ".$_SESSION["allowed_circ"]." AND id_tipologia = " . $row["id"];
                                 if($result = $mysqli->query($sql)){
                                     if($result->num_rows > 0){
                                     echo '<table id="tabella_immobili" class="table table-striped table-bordered no-wrap">';
@@ -220,7 +221,7 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
                                 FROM interventi_immobili ii
                                 LEFT JOIN immobili i ON ii.id_immobile=i.id
                                 LEFT JOIN ditte d ON ii.id_ditta=d.id
-                                WHERE i.id_tipologia = " . $row["id"];
+                                WHERE i.circoscrizione IN ".$_SESSION["allowed_circ"]." AND i.i.id_tipologia = " . $row["id"];
                                 if($result = $mysqli->query($sql)){
                                     if($result->num_rows > 0){
                                         echo '<table id="tabella_interventi" class="table table-striped table-bordered no-wrap">';

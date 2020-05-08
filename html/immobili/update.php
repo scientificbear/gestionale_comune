@@ -65,7 +65,9 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
         $id =  trim($_GET["id"]);
         
         // Prepare a select statement
-        $sql = "SELECT * FROM immobili WHERE id = ?";
+        $sql = "SELECT *
+        FROM immobili
+        WHERE circoscrizione IN ".$_SESSION["allowed_circ"]." AND id = ?";
         if($stmt = $mysqli->prepare($sql)){
             // Bind variables to the prepared statement as parameters
             $stmt->bind_param("i", $param_id);

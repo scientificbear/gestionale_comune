@@ -8,7 +8,10 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
     require_once "../general/config.php";
     
     // Prepare a select statement
-    $sql = "SELECT i.*, ti.tipologia, i.id_tipologia as id_tipologia FROM immobili i LEFT JOIN tipo_immobili ti ON i.id_tipologia=ti.id WHERE i.id = ?";
+    $sql = "SELECT i.*, ti.tipologia, i.id_tipologia as id_tipologia
+    FROM immobili i
+    LEFT JOIN tipo_immobili ti ON i.id_tipologia=ti.id
+    WHERE i.circoscrizione IN ".$_SESSION["allowed_circ"]."  AND i.id = ?";
     
     if($stmt = $mysqli->prepare($sql)){
         // Bind variables to the prepared statement as parameters

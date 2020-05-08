@@ -44,6 +44,15 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $result = insert_data($table,$field,$data,$mysqli);
 
         if($result){
+
+            $last_id = $mysqli->insert_id;
+            $insert_values = "";
+            foreach(array(1,2,3,4,5,6,7,8) as $c_name){
+                $insert_values = $insert_values . "(".$last_id.",".$c_name."), ";
+            }
+            $insert_values = rtrim($insert_values, ", ");
+            $sql_circ = "INSERT INTO ditte_circoscrizioni (id_ditta, circoscrizione) VALUES ".$insert_values;
+            $result = $mysqli->query($sql_circ);
             // Records created successfully. Redirect to landing page
             header("location: index.php");
             exit();

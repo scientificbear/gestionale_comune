@@ -85,7 +85,15 @@ require_once "../general/utils.php";
                                 require_once "../general/config.php";
                                 
                                 // Attempt select query execution
-                                $sql = "SELECT d.*, cd.categoria FROM ditte d LEFT JOIN categoria_ditte cd ON d.id_categoria=cd.id";
+                                $sql = "SELECT d.*, cd.categoria
+                                FROM ditte d
+                                LEFT JOIN categoria_ditte cd ON d.id_categoria=cd.id
+                                INNER JOIN (SELECT DISTINCT (id_ditta)
+                                    FROM utenti_circoscrizioni uc
+                                    INNER JOIN ditte_circoscrizioni dc
+                                    ON uc.circoscrizione=dc.circoscrizione
+                                    WHERE id_utente=".$_SESSION["id"].")
+                                as sd on d.id=sd.id_ditta";
                                 if($result = $mysqli->query($sql)){
                                     if($result->num_rows > 0){
                                     echo '<table id="zero_config" class="table table-striped table-bordered no-wrap">';

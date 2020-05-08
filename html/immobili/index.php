@@ -84,7 +84,11 @@ require_once "../general/utils.php";
                                 require_once "../general/config.php";
                                 
                                 // Attempt select query execution
-                                $sql = "SELECT i.*, ti.tipologia FROM immobili i LEFT JOIN tipo_immobili ti ON i.id_tipologia=ti.id ORDER BY i.id";
+                                $sql = "SELECT i.*, ti.tipologia
+                                FROM immobili i
+                                LEFT JOIN tipo_immobili ti ON i.id_tipologia=ti.id
+                                WHERE i.circoscrizione IN ".$_SESSION["allowed_circ"]." 
+                                ORDER BY i.id";
                                 if($result = $mysqli->query($sql)){
                                     if($result->num_rows > 0){
                                     echo '<table id="zero_config" class="table table-striped table-bordered no-wrap">';
