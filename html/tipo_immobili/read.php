@@ -107,7 +107,7 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
                         <div class="customize-input float-right">
                             <?php protect_content('<a href="update.php?id='.$row["id"].'" class="btn btn-secondary btn-circle-lg"><i class="fa fas fa-edit"></i></a>',
                             $_SESSION["role"], array("admin", "editor")) ?>
-                            <?php protect_content('<a href="delete.php?id='.$row["id"].'" class="btn btn-danger btn-circle-lg"><i class="fa fas fa-edit"></i></a>',
+                            <?php protect_content('<a href="delete.php?id='.$row["id"].'" class="btn btn-danger btn-circle-lg"><i class="fa fas fa-trash-alt"></i></a>',
                             $_SESSION["role"], array("admin", "editor")) ?>
                         </div>
                     </div>

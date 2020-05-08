@@ -140,32 +140,32 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
                                 <h3>Record</h3>
                                 <br />
                                 <div class="row">
-                                <div class="col-md-6">
-                                    <h5 class="card-title">ID</h5>
-                                    <p class="card-text"><?php echo $row["id"]; ?></p>
-                                    <br/>
-                                    <h5 class="card-title">data</h5>
-                                    <p class="card-text"><?php echo $row["data"]; ?></p>
-                                    <br/>
-                                    <h5 class="card-title">Descrizione</h5>
-                                    <p class="card-text"><?php echo $row["descrizione"]; ?></p>
-                                    <br/>
-                                    <h5 class="card-title">Immobile</h5>
-                                    <p class="card-text"><?php echo $row["nome_immobile"]; ?></p>
-                                    <br/>
-                                    <h5 class="card-title">Indirizzo</h5>
-                                    <p class="card-text"><?php echo $row["indirizzo"]; ?></p>
-                                </div>
-                                <div class="col-md-6">
-                                    <h5 class="card-title">Ditta</h5>
-                                    <p class="card-text"><?php echo $row["nome_ditta"]; ?></p>
-                                    <br/>
-                                    <h5 class="card-title">Email</h5>
-                                    <p class="card-text"><?php echo $row["email"]; ?></p>
-                                    <br/>
-                                    <h5 class="card-title">Data creazione (ultima modifica) record</h5>
-                                    <p class="card-text"><?php echo $row["created_at"]; ?> (<?php echo $row["last_modified_at"]; ?>)</p>
-                                <div>
+                                    <div class="col-md-6">
+                                        <h5 class="card-title">ID</h5>
+                                        <p class="card-text"><?php echo $row["id"]; ?></p>
+                                        <br/>
+                                        <h5 class="card-title">data</h5>
+                                        <p class="card-text"><?php echo $row["data"]; ?></p>
+                                        <br/>
+                                        <h5 class="card-title">Descrizione</h5>
+                                        <p class="card-text"><?php echo $row["descrizione"]; ?></p>
+                                        <br/>
+                                        <h5 class="card-title">Immobile</h5>
+                                        <p class="card-text"><?php echo $row["nome_immobile"]; ?></p>
+                                        <br/>
+                                        <h5 class="card-title">Indirizzo</h5>
+                                        <p class="card-text"><?php echo $row["indirizzo"]; ?></p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h5 class="card-title">Ditta</h5>
+                                        <p class="card-text"><?php echo $row["nome_ditta"]; ?></p>
+                                        <br/>
+                                        <h5 class="card-title">Email</h5>
+                                        <p class="card-text"><?php echo $row["email"]; ?></p>
+                                        <br/>
+                                        <h5 class="card-title">Data creazione (ultima modifica) record</h5>
+                                        <p class="card-text"><?php echo $row["created_at"]; ?> (<?php echo $row["last_modified_at"]; ?>)</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -117,7 +117,7 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
                         <div class="customize-input float-right">
                             <?php protect_content('<a href="update.php?id='.$row["id"].'" class="btn btn-secondary btn-circle-lg"><i class="fa fas fa-edit"></i></a>',
                             $_SESSION["role"], array("admin", "editor")) ?>
-                            <?php protect_content('<a href="delete.php?id='.$row["id"].'" class="btn btn-danger btn-circle-lg"><i class="fa fas fa-edit"></i></a>',
+                            <?php protect_content('<a href="delete.php?id='.$row["id"].'" class="btn btn-danger btn-circle-lg"><i class="fa fas fa-trash-alt"></i></a>',
                             $_SESSION["role"], array("admin", "editor")) ?>
                         </div>
                     </div>
@@ -140,32 +140,32 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
                                 <h3>Record</h3>
                                 <br />
                                 <div class="row">
-                                <div class="col-md-6">
-                                    <h5 class="card-title">Denominazione</h5>
-                                    <p class="card-text"><?php echo $row["nome"]; ?></p>
-                                    <br/>
-                                    <h5 class="card-title">Indirizzo</h5>
-                                    <p class="card-text"><?php echo $row["indirizzo"]; ?></p>
-                                    <br/>
-                                    <h5 class="card-title">CAP</h5>
-                                    <p class="card-text"><?php echo $row["cap"]; ?></p>
-                                    <br/>
-                                    <h5 class="card-title">Circoscrizione</h5>
-                                    <p class="card-text"><?php echo $row["circoscrizione"]; ?></p>
-                                </div>
-                                <div class="col-md-6">
-                                    <h5 class="card-title">Codice</h5>
-                                    <p class="card-text"><?php echo $row["codice"]; ?></p>
-                                    <br/>
-                                    <h5 class="card-title">Tipologia</h5>
-                                    <p class="card-text"><?php echo $row["tipologia"]; ?></p>
-                                    <br/>
-                                    <h5 class="card-title">Referente</h5>
-                                    <p class="card-text"><?php echo $row["nome_ref"]; ?> (<?php echo $row["telefono_ref"]; ?>)</p>
-                                    <br/>
-                                    <h5 class="card-title">Data creazione (ultima modifica) record</h5>
-                                    <p class="card-text"><?php echo $row["created_at"]; ?> (<?php echo $row["last_modified_at"]; ?>)</p>
-                                <div>
+                                    <div class="col-md-6">
+                                        <h5 class="card-title">Denominazione</h5>
+                                        <p class="card-text"><?php echo $row["nome"]; ?></p>
+                                        <br/>
+                                        <h5 class="card-title">Indirizzo</h5>
+                                        <p class="card-text"><?php echo $row["indirizzo"]; ?></p>
+                                        <br/>
+                                        <h5 class="card-title">CAP</h5>
+                                        <p class="card-text"><?php echo $row["cap"]; ?></p>
+                                        <br/>
+                                        <h5 class="card-title">Circoscrizione</h5>
+                                        <p class="card-text"><?php echo $row["circoscrizione"]; ?></p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h5 class="card-title">Codice</h5>
+                                        <p class="card-text"><?php echo $row["codice"]; ?></p>
+                                        <br/>
+                                        <h5 class="card-title">Tipologia</h5>
+                                        <p class="card-text"><?php echo $row["tipologia"]; ?></p>
+                                        <br/>
+                                        <h5 class="card-title">Referente</h5>
+                                        <p class="card-text"><?php echo $row["nome_ref"]; ?> (<?php echo $row["telefono_ref"]; ?>)</p>
+                                        <br/>
+                                        <h5 class="card-title">Data creazione (ultima modifica) record</h5>
+                                        <p class="card-text"><?php echo $row["created_at"]; ?> (<?php echo $row["last_modified_at"]; ?>)</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
