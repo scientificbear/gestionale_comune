@@ -110,6 +110,8 @@ require_once "../general/utils.php";
                                                 echo "<td><a href='read.php?id=". $row['id'] ."' title='Vedi Record'><i class='fas fa-eye'></i></a>";
                                         protect_content("<span> - </span><a href='update.php?id=". $row['id'] ."' title='Aggiorna Record'><i class='fas fa-edit'></i></a>",
                                         $_SESSION["role"], array("admin", "editor"));
+                                        protect_content("<span> - </span><a href='enable.php?id=". $row['id'] ."' title='Cambia circoscrizioni'><i class='fas fa-sitemap'></i></a>",
+                                        $_SESSION["role"], array("admin", "editor"));
                                         protect_content("<span> - </span><a href='delete.php?id=". $row['id'] ."' title='Elimina Record'><i class='fas fa-trash-alt'></i></a>",
                                         $_SESSION["role"], array("admin", "editor"));
                                         echo "</td>";

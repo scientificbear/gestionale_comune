@@ -2,6 +2,8 @@
 
 require_once "../general/protect.php";
 require_once "../general/utils.php";
+$circ = array("1"=>False, "2"=>False, "3"=>False, "4"=>False, "5"=>False, "6"=>False, "7"=>False, "8"=>False);
+
 // Check existence of id parameter before processing further
 if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
     // Include config file
@@ -24,6 +26,15 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
             if($result->num_rows == 1){
                 /* Fetch result row as an associative array. Since the result set contains only one row, we don't need to use while loop */
                 $row = $result->fetch_array(MYSQLI_ASSOC);
+                
+                $sql_circ = "SELECT * FROM ditte_circoscrizioni WHERE id_ditta = ".$row["id"];
+                if($result_circ = $mysqli->query($sql_circ)){
+                    if($result->num_rows > 0){
+                        while($row_circ = $result_circ->fetch_array()){
+                            $circ[$row_circ["circoscrizione"]] = True;
+                        }
+                    }
+                }
                 
             } else{
                 // URL doesn't contain valid id parameter. Redirect to error page
@@ -155,6 +166,26 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
                                         <br/>
                                         <h5 class="card-title">Data creazione (ultima modifica) record</h5>
                                         <p class="card-text"><?php echo $row["created_at"]; ?> (<?php echo $row["last_modified_at"]; ?>)</p>
+                                        <br/>
+                                        <div class="form-group">
+                                        <h5 class="card-title">Circoscrizioni abilitate</h5>
+                                        <div class="row">
+                                            <?php
+                                                foreach ($circ as $c_name => $c_value){
+                                                    echo '<div class="col-md-1">';
+                                                    echo '<div class="custom-control custom-checkbox">';
+                                                    if ($c_value){
+                                                        echo '<input type="checkbox" class="custom-control-input" id="circ'.$c_name.'" name="circ'.$c_name.'" value=True disabled checked>';
+                                                    } else {
+                                                        echo '<input type="checkbox" class="custom-control-input" id="circ'.$c_name.'" name="circ'.$c_name.'" value=True disabled >';
+                                                    }
+                                                    echo '<label class="custom-control-label" for="circ'.$c_name.'">'.$c_name.'^</label>';
+                                                    echo '</div>';
+                                                    echo '</div>';
+                                                }
+                                            ?>
+                                        </div>
+                                    </div>
                                     </div>
                                 </div>
                             </div>

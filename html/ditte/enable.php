@@ -1,57 +1,68 @@
 <?php
+
 require_once "../general/protect.php";
 require_once "../general/utils.php";
 check_user($_SESSION["role"], array("admin", "editor"));
 
-// Process delete operation after confirmation
+// Include config file
+require_once "../general/config.php";
+ 
+// Define variables and initialize with empty values
+$circ = array("1"=>False, "2"=>False, "3"=>False, "4"=>False, "5"=>False, "6"=>False, "7"=>False, "8"=>False);
+
+// Processing form data when form is submitted
 if(isset($_POST["id"]) && !empty($_POST["id"])){
-    // Include config file
-    require_once "../general/config.php";
+    // Get hidden input value
+    $id = $_POST["id"];
+    error_log("POST: ".json_encode($_POST));
     
-    // Prepare a delete statement
-    $sql = "DELETE FROM ditte WHERE id = ?";
-    
-    if($stmt = $mysqli->prepare($sql)){
-        // Bind variables to the prepared statement as parameters
-        $stmt->bind_param("i", $param_id);
-        
-        // Set parameters
-        $param_id = trim($_POST["id"]);
-        
-        // Attempt to execute the prepared statement
-        if($stmt->execute()){
+    // Delete previous data
+    $sql_circ = "DELETE FROM ditte_circoscrizioni WHERE id_ditta = ".$id;
+    error_log($sql_circ);
+    $result = $mysqli->query($sql_circ);
+    if(! $result){
+        echo "Something went wrong 1. Please try again later (", $mysqli->error, ")";
+        die();
+    }
 
-            $sql_circ = "DELETE FROM ditte_circoscrizioni WHERE id_ditta = ".$param_id;
-            $result = $mysqli->query($sql_circ);
-
-            // Records deleted successfully. Redirect to landing page
-            header("location: index.php");
-            exit();
-        } else{
-            echo "Something went wrong. Please try again later (", $stmt->error, ")";
+    // Add new data
+    $insert_values = "";
+    foreach ($circ as $c_name => $c_value){
+        if (array_key_exists("circ".$c_name, $_POST)){
+            if ($_POST["circ".$c_name] == True){
+                $insert_values = $insert_values . "(".$id.",".$c_name."), ";
+            }
         }
     }
-     
-    // Close statement
-    $stmt->close();
-    
-    // Close connection
-    $mysqli->close();
+    $insert_values = rtrim($insert_values, ", ");
+
+    if (strlen($insert_values) > 0){
+        $sql_circ = "INSERT INTO ditte_circoscrizioni (id_ditta, circoscrizione) VALUES ".$insert_values;
+        $result = $mysqli->query($sql_circ);
+        if($result){
+            header("location: index.php");
+            exit();
+            // Close connection
+            $mysqli->close();
+        } else {
+            echo "Something went wrong 2. Please try again later (", $mysqli->error, ")";
+        }
+    }    
+
 } else{
-    // Check existence of id parameter
+    // Check existence of id parameter before processing further
     if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
-        // Include config file
-        require_once "../general/config.php";
+        // Get URL parameter
+        $id =  trim($_GET["id"]);
         
         // Prepare a select statement
-        $sql = "SELECT d.*, cd.categoria FROM ditte d LEFT JOIN categoria_ditte cd ON d.id_categoria=cd.id WHERE d.id = ?";
-        
+        $sql = "SELECT * FROM ditte WHERE id = ?";
         if($stmt = $mysqli->prepare($sql)){
             // Bind variables to the prepared statement as parameters
             $stmt->bind_param("i", $param_id);
             
             // Set parameters
-            $param_id = trim($_GET["id"]);
+            $param_id = $id;
             
             // Attempt to execute the prepared statement
             if($stmt->execute()){
@@ -60,29 +71,31 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                 if($result->num_rows == 1){
                     /* Fetch result row as an associative array. Since the result set contains only one row, we don't need to use while loop */
                     $row = $result->fetch_array(MYSQLI_ASSOC);
-                    
-                    // Retrieve individual field value
-                    $id = $row["id"];
-                    $nome = $row["nome"];
-                    $comune = $row["codice"];
-                    $categoria = $row["categoria"];
+
+                    $sql_circ = "SELECT * FROM ditte_circoscrizioni WHERE id_ditta = ".$id;
+                    if($result_circ = $mysqli->query($sql_circ)){
+                        if($result->num_rows > 0){
+                            while($row_circ = $result_circ->fetch_array()){
+                                $circ[$row_circ["circoscrizione"]] = True;
+                            }
+                        }
+                    }
+
                 } else{
-                    // URL doesn't contain valid id parameter. Redirect to error page
+                    // URL doesn't contain valid id. Redirect to error page
                     header("location: ../general/error.php");
                     exit();
                 }
                 
             } else{
-                echo "Something went wrong. Please try again later (", $stmt->error, ")";
+                echo "Something went wrong. Please try again later (", $mysqli->error, ")";
             }
         }
-         
+        
         // Close statement
         $stmt->close();
         
-        // Close connection
-        $mysqli->close();
-    } else{
+    }  else{
         // URL doesn't contain id parameter. Redirect to error page
         header("location: ../general/error.php");
         exit();
@@ -97,6 +110,28 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
     <?php include "../general/head.php"; ?>
     <!-- This page plugin CSS -->
     <link href="../../assets/extra-libs/datatables.net-bs4/css/dataTables.bootstrap4.css" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.12/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.12/js/select2.min.js"></script>
+
+    <script type="text/javascript">
+    $(document).ready(function(){
+        
+        // Initialize select2
+        $("#sel_categoria_ditte").select2();
+
+        // Read selected option
+        $('#but_read').click(function(){
+        var categoria = $('#sel_categoria_ditte option:selected').text();
+        var id_categoria = $('#sel_categoria_ditte').val();
+
+        $('#result').html("id : " + id_categoria + ", categoria : " + categoria);
+
+        });
+    });
+    </script>
+
 </head>
 
 <body>
@@ -133,13 +168,13 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
             <div class="page-breadcrumb">
                 <div class="row">
                 <div class="col-7 align-self-center">
-                        <h4 class="page-title text-truncate text-dark font-weight-medium mb-1">Elimina ditta</h4>
+                        <h4 class="page-title text-truncate text-dark font-weight-medium mb-1">Abilita circoscrizioni</h4>
                         <div class="d-flex align-items-center">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb m-0 p-0">
                                     <li class="breadcrumb-item"><a href="../home/index.php" class="text-muted">Home</a></li>
-                                    <li class="breadcrumb-item"><a href="index.php" class="text-muted">Ditte</a></li>
-                                    <li class="breadcrumb-item text-muted active" aria-current="page">Elimina</li>
+                                    <li class="breadcrumb-item"><a href="./index.php" class="text-muted">Ditte</a></li>
+                                    <li class="breadcrumb-item text-muted active" aria-current="page">Abilita</li>
                                 </ol>
                             </nav>
                         </div>
@@ -157,28 +192,43 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                 <!-- Start Top Leader Table -->
                 <!-- *************************************************************** -->
                 <div class="row">
-                <div class="col-12">
+                    <div class="col-12">
                         <div class="card">
                             <div class="card-body col-md-6 m-auto">
-                                <h3>Sei sicuro di voler eliminare definitivamente questo record?</h3>
-                                <br />
-                                <h4 class="card-title">ID</h4>
-                                <p class="card-text"><?php echo $row["id"]; ?></p>
-                                <br/>
-                                <h4 class="card-title">Denominazione</h4>
-                                <p class="card-text"><?php echo $row["nome"]; ?></p>
-                                <br />
-                                <h4 class="card-title">Comune</h4>
-                                <p class="card-text"><?php echo $row["comune"]; ?></p>
-                                <br />
-                                <h4 class="card-title">Categoria</h4>
-                                <p class="card-text"><?php echo $row["categoria"]; ?></p>
-                                <br />
-                                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-                                    <input type="hidden" name="id" value="<?php echo $row["id"]; ?>"/>
+                                <form class="mt-4" action="<?php echo htmlspecialchars(basename($_SERVER['REQUEST_URI'])); ?>" method="post">
+                                    <div class="form-group">
+                                        <h5 class="card-title">ID</h5>
+                                        <input type="text" class="form-control" name="id" readonly value="<?php echo $row["id"]; ?>">
+                                    </div>
+                                    <br />
+                                    <div class="form-group">
+                                        <h5 class="card-title">Denominazione</h5>
+                                        <input type="text" class="form-control" name="nome" readonly value="<?php echo $row["nome"]; ?>">
+                                    </div>
+                                    <br />
+                                    <div class="form-group">
+                                        <h5 class="card-title">Circoscrizioni abilitate</h5>
+                                        <div class="row">
+                                            <?php
+                                                foreach ($circ as $c_name => $c_value){
+                                                    echo '<div class="col-md-1">';
+                                                    echo '<div class="custom-control custom-checkbox">';
+                                                    if ($c_value){
+                                                        echo '<input type="checkbox" class="custom-control-input" id="circ'.$c_name.'" name="circ'.$c_name.'" value=True checked>';
+                                                    } else {
+                                                        echo '<input type="checkbox" class="custom-control-input" id="circ'.$c_name.'" name="circ'.$c_name.'" value=True >';
+                                                    }
+                                                    echo '<label class="custom-control-label" for="circ'.$c_name.'">'.$c_name.'^</label>';
+                                                    echo '</div>';
+                                                    echo '</div>';
+                                                }
+                                            ?>
+                                        </div>
+                                    </div>
+                                    <br />
                                     <div class="form-actions">
                                         <div class="text-right">
-                                            <button type="submit" value="Yes" class="btn btn-danger">Elimina</button>
+                                            <button type="submit" class="btn btn-info">Salva</button>
                                             <a href="index.php" class="btn btn-dark">Annulla</a>
                                         </div>
                                     </div>
@@ -186,8 +236,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                             </div>
                         </div>
                     </div>
-                </div>
-                <!-- *************************************************************** -->
+                </div>                <!-- *************************************************************** -->
                 <!-- End Top Leader Table -->
                 <!-- *************************************************************** -->
             </div>

@@ -75,6 +75,12 @@ CREATE TABLE `assenze` (
   `last_modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
+CREATE TABLE `ditte_circoscrizioni` (
+  `id_ditta` int NOT NULL,
+  `circoscrizione` INT NOT NULL,
+  PRIMARY KEY (`id_ditta`, `circoscrizione`)
+);
+
 ALTER TABLE `immobili` ADD FOREIGN KEY (`id_tipologia`) REFERENCES `tipo_immobili` (`id`);
 
 ALTER TABLE `interventi_immobili` ADD FOREIGN KEY (`id_immobile`) REFERENCES `immobili` (`id`);
