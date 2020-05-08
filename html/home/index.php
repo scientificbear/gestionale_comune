@@ -71,7 +71,10 @@ require_once "../general/config.php";
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title">Interventi segnalati</h4>
-                                <?php $sql = "SELECT count(*) AS c from interventi_immobili";
+                                <?php $sql = "SELECT count(*) AS c
+                                FROM interventi_immobili ii
+                                LEFT JOIN immobili i ON ii.id_immobile=i.id
+                                WHERE i.circoscrizione IN ".$_SESSION["allowed_circ"];
                                     if($result = $mysqli->query($sql)){
                                         if($result->num_rows == 1){
                                             $row = $result->fetch_array(MYSQLI_ASSOC);
@@ -91,7 +94,8 @@ require_once "../general/config.php";
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title">Immobili</h4>
-                                <?php $sql = "SELECT count(*) AS c from immobili";
+                                <?php $sql = "SELECT count(*) AS c FROM immobili i
+                                WHERE i.circoscrizione IN ".$_SESSION["allowed_circ"];
                                     if($result = $mysqli->query($sql)){
                                         if($result->num_rows == 1){
                                             $row = $result->fetch_array(MYSQLI_ASSOC);
@@ -111,7 +115,14 @@ require_once "../general/config.php";
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title">Ditte</h4>
-                                <?php $sql = "SELECT count(*) AS c from ditte";
+                                <?php $sql = "SELECT count(*) AS c
+                                FROM ditte d
+                                INNER JOIN (SELECT DISTINCT (id_ditta)
+                                    FROM utenti_circoscrizioni uc
+                                    INNER JOIN ditte_circoscrizioni dc
+                                    ON uc.circoscrizione=dc.circoscrizione
+                                    WHERE id_utente=".$_SESSION["id"].")
+                                as sd on d.id=sd.id_ditta";
                                     if($result = $mysqli->query($sql)){
                                         if($result->num_rows == 1){
                                             $row = $result->fetch_array(MYSQLI_ASSOC);
