@@ -50,13 +50,18 @@
 
                         <li class="list-divider"></li>
 
+                        <?php require_once "../general/utils.php";
+                                protect_content('
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="../utenti/index.php" aria-expanded="false">
                                 <i class="far fa-user"></i>
                                 <span class="hide-menu">Utenti</span>
                             </a>
                         </li>
-
+                        ',
+                        $_SESSION["role"], array("admin"));
+                        ?>
+                        
                         <li class="sidebar-item">
                             <a class="sidebar-link sidebar-link" href="../general/logout.php" aria-expanded="false">
                                 <i data-feather="log-out" class="feather-icon"></i>

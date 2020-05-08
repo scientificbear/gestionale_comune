@@ -1,6 +1,6 @@
 <?php
 // Initialize the session
-session_start();
+// session_start();
  
 // Check if the user is already logged in, if yes then redirect him to welcome page
 if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
@@ -36,7 +36,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     if(empty($email_err) && empty($password_err)){
         // Prepare a select statement
         $sql = "SELECT id, nome, cognome, email, password, role FROM utenti WHERE email = ?";
-        error_log($sql);
         
         if($stmt = $mysqli->prepare($sql)){
             // Bind variables to the prepared statement as parameters
@@ -66,6 +65,21 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             $_SESSION["nome"] = $nome;
                             $_SESSION["cognome"] = $cognome;
                             $_SESSION["role"] = $role;
+
+                            $allowed_circ = array();
+                            $sql_circ = "SELECT * FROM utenti_circoscrizioni WHERE id_utente = ".$id;
+                            error_log($sql_circ);
+                            error_log(json_encode($allowed_circ));
+                            if($result_circ = $mysqli->query($sql_circ)){
+                                if($result_circ->num_rows > 0){
+                                    while($row_circ = $result_circ->fetch_array()){
+                                        $allowed_circ[] = "'".$row_circ["circoscrizione"]."'";
+                                        error_log(json_encode($allowed_circ));
+                                    }
+                                }
+                            }
+                            error_log(json_encode($allowed_circ));
+                            $_SESSION["allowed_circ"] = "(" . implode(", ", $allowed_circ) . ")";
                             error_log(json_encode($_SESSION));
                             
                             // Redirect user to welcome page

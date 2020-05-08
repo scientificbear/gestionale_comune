@@ -63,10 +63,6 @@
                                         class="svg-icon"></i></span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
-                                <?php require_once "../general/utils.php";
-                                protect_content('<a class="dropdown-item" href="../general/register.php"><i data-feather="user" class="svg-icon mr-2 ml-1"></i>Nuovo utente</a>',
-                                $_SESSION["role"], array("admin"));
-                                ?>
                                 <a class="dropdown-item" href="../general/reset-password.php"><i data-feather="settings"
                                         class="svg-icon mr-2 ml-1"></i>
                                     Reset password</a>
