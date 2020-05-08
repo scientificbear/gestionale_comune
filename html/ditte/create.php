@@ -207,7 +207,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                                     <?php
                                         $sql = "SELECT id, categoria FROM categoria_ditte ORDER BY categoria";
                                         if($result = $mysqli->query($sql)){
-                                            echo "<select class='form-control' id='sel_categoria_ditte' style='width: 200px;' name='id_categoria'>";
+                                            echo "<select class='form-control' id='sel_categoria_ditte' style='width: 100%' name='id_categoria'>";
                                             if($result->num_rows > 0){
                                                 echo "<option selected='true' disabled='disabled'>categoria</option>";
                                                 while($row = $result->fetch_array()){

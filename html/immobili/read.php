@@ -131,6 +131,9 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
                                         <h5 class="card-title">Denominazione</h5>
                                         <p class="card-text"><?php echo $row["nome"]; ?></p>
                                         <br/>
+                                        <h5 class="card-title">Descrizione</h5>
+                                        <p class="card-text"><?php echo $row["descrizione"]; ?></p>
+                                        <br/>
                                         <h5 class="card-title">Indirizzo</h5>
                                         <p class="card-text"><?php echo $row["indirizzo"]; ?></p>
                                         <br/>
