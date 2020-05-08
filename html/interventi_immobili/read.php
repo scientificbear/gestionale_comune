@@ -7,7 +7,7 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
     require_once "../general/config.php";
     
     // Prepare a select statement
-    $sql = "SELECT ii.*, i.nome AS nome_immobile, i.indirizzo, d.nome AS nome_ditta, d.email
+    $sql = "SELECT ii.*, i.nome AS nome_immobile, i.indirizzo, ii.id_immobile as id_immobile, d.nome AS nome_ditta, d.email, ii.id_ditta as id_ditta
     FROM interventi_immobili ii
     LEFT JOIN immobili i ON ii.id_immobile=i.id
     LEFT JOIN ditte d ON ii.id_ditta=d.id
@@ -27,18 +27,6 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
             if($result->num_rows == 1){
                 /* Fetch result row as an associative array. Since the result set contains only one row, we don't need to use while loop */
                 $row = $result->fetch_array(MYSQLI_ASSOC);
-                
-                // Retrieve individual field value
-                $id = $row["id"];
-                $data = $row["data"];
-                $descrizione = $row["descrizione"];
-                $nome_immobile = $row["nome_immobile"];
-                $indirizzo = $row["indirizzo"];
-                $nome_ditta = $row["nome_ditta"];
-                $email = $row["email"];
-                $created_at = $row["created_at"];
-                $last_modified_at = $row["last_modified_at"];
-
             } else{
                 // URL doesn't contain valid id parameter. Redirect to error page
                 header("location: ../general/error.php");
@@ -151,14 +139,14 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
                                         <p class="card-text"><?php echo $row["descrizione"]; ?></p>
                                         <br/>
                                         <h5 class="card-title">Immobile</h5>
-                                        <p class="card-text"><?php echo $row["nome_immobile"]; ?></p>
+                                        <p class="card-text"><?php echo $row["nome_immobile"] . "&emsp; <a href='../immobili/read.php?id=" . $row["id_immobile"] . "'><i class='fas fa-external-link-alt'></i></a>"; ?></p>
                                         <br/>
                                         <h5 class="card-title">Indirizzo</h5>
                                         <p class="card-text"><?php echo $row["indirizzo"]; ?></p>
                                     </div>
                                     <div class="col-md-6">
                                         <h5 class="card-title">Ditta</h5>
-                                        <p class="card-text"><?php echo $row["nome_ditta"]; ?></p>
+                                        <p class="card-text"><?php echo $row["nome_ditta"] . "&emsp; <a href='../ditte/read.php?id=" . $row["id_ditta"] . "'><i class='fas fa-external-link-alt'></i></a>"; ?></p>
                                         <br/>
                                         <h5 class="card-title">Email</h5>
                                         <p class="card-text"><?php echo $row["email"]; ?></p>

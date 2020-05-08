@@ -56,6 +56,12 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
     <?php include "../general/head.php"; ?>
     <!-- This page plugin CSS -->
     <link href="../../assets/extra-libs/datatables.net-bs4/css/dataTables.bootstrap4.css" rel="stylesheet">
+
+    <script type="text/javascript">
+    // $(document).ready( function () {
+    //     // $('#tabella_immobili').DataTable();
+    // } );
+    </script>
 </head>
 
 <body>
@@ -148,18 +154,24 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
                                 <h3>Immobili associati</h3>
                                 <br />
                                 <div class="table-responsive">
+                                <script type="text/javascript">
+                                    $(document).ready(function() {
+                                        $('#tabella_immobili').DataTable({order:[[1,"asc"]]});
+                                    } );
+                                </script>
                                 <?php                                
                                 // Attempt select query execution
-                                $sql = "SELECT * FROM immobili WHERE id_tipologia = " . $row["id"] . " ORDER BY nome";
+                                $sql = "SELECT * FROM immobili WHERE id_tipologia = " . $row["id"];
                                 if($result = $mysqli->query($sql)){
                                     if($result->num_rows > 0){
-                                    echo '<table id="zero_config" class="table table-striped table-bordered no-wrap">';
+                                    echo '<table id="tabella_immobili" class="table table-striped table-bordered no-wrap">';
                                     echo "<thead>";
                                     echo "<tr>";
                                     echo "<th>#</th>";
                                     echo "<th>Nome</th>";
                                     echo "<th>Descrizione</th>";
                                     echo "<th>Indirizzo</th>";
+                                    echo "<th></th>";
                                     echo "</tr>";
                                     echo "</thead>";
                                     echo "<tbody>";
@@ -169,27 +181,89 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
                                         echo "<td>" . $det_row['nome'] . "</td>";
                                         echo "<td>" . $det_row['descrizione'] . "</td>";
                                         echo "<td>" . $det_row['indirizzo'] . "</td>";
+                                        echo "<td><a href='../immobili/read.php?id=". $det_row['id'] ."' title='Vedi Record'><i class='fas fa-eye'></i></a></td>";
                                         echo "</tr>";
                                     }
-                                    echo "</tbody>";                            
-                                echo "</table>";
-                                // Free result set
-                                $result->free();
-                            } else{
-                                echo "<p><em>Nessun risultato trovato.</em></p>";
-                            }
-                        } else{
-                            echo "ERROR: Non riesco ad eseguire $sql. " . $mysqli->error;
-                        }
-                        
-                        // Close connection
-                        $mysqli->close();
-                        ?>
+                                            echo "</tbody>";                            
+                                        echo "</table>";
+                                        // Free result set
+                                        $result->free();
+                                    } else{
+                                        echo "<p><em>Nessun risultato trovato.</em></p>";
+                                    }
+                                } else{
+                                    echo "ERROR: Non riesco ad eseguire $sql. " . $mysqli->error;
+                                }
+                                ?>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h3>Interventi associati</h3>
+                                <br />
+                                <div class="table-responsive">
+                                <script type="text/javascript">
+                                    $(document).ready(function() {
+                                        $('#tabella_interventi').DataTable({order:[[1,"desc"]]});
+                                    } );
+                                </script>
+                                <?php                                
+                                // Attempt select query execution
+                                $sql = "SELECT ii.id, ii.data, ii.descrizione, i.nome AS nome_immobile, d.nome AS nome_ditta
+                                FROM interventi_immobili ii
+                                LEFT JOIN immobili i ON ii.id_immobile=i.id
+                                LEFT JOIN ditte d ON ii.id_ditta=d.id
+                                WHERE i.id_tipologia = " . $row["id"];
+                                if($result = $mysqli->query($sql)){
+                                    if($result->num_rows > 0){
+                                        echo '<table id="tabella_interventi" class="table table-striped table-bordered no-wrap">';
+                                        echo "<thead>";
+                                        echo "<tr>";
+                                        echo "<th>#</th>";
+                                        echo "<th>Data</th>";
+                                        echo "<th>Immobile</th>";
+                                        echo "<th>Ditta</th>";
+                                        echo "<th>Descrizione</th>";
+                                        echo "<th></th>";
+                                        echo "</tr>";
+                                        echo "</thead>";
+                                        echo "<tbody>";
+                                        while($int_row = $result->fetch_array()){
+                                            echo "<tr>";
+                                            echo "<td>" . $int_row['id'] . "</td>";
+                                            echo "<td>" . $int_row['data'] . "</td>";
+                                            echo "<td>" . $int_row['nome_immobile'] . "</td>";
+                                            echo "<td>" . $int_row['nome_ditta'] . "</td>";
+                                            echo "<td>" . $int_row['descrizione'] . "</td>";
+                                            echo "<td><a href='../interventi_immobili/read.php?id=". $int_row['id'] ."' title='Vedi Record'><i class='fas fa-eye'></i></a></td>";
+                                            echo "</tr>";
+                                        }
+                                        echo "</tbody>";                            
+                                        echo "</table>";
+                                        // Free result set
+                                        $result->free();
+                                    } else{
+                                        echo "<p><em>Nessun risultato trovato.</em></p>";
+                                    }
+                                } else{
+                                    echo "ERROR: Non riesco ad eseguire $sql. " . $mysqli->error;
+                                }
+                                // Close connection
+                                $mysqli->close();
+                                ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- *************************************************************** -->
                 <!-- End Top Leader Table -->
                 <!-- *************************************************************** -->

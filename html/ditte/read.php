@@ -8,7 +8,7 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
     require_once "../general/config.php";
     
     // Prepare a select statement
-    $sql = "SELECT d.*, cd.categoria FROM ditte d LEFT JOIN categoria_ditte cd ON d.id_categoria=cd.id WHERE d.id = ?";
+    $sql = "SELECT d.*, cd.categoria, cd.id as id_categoria FROM ditte d LEFT JOIN categoria_ditte cd ON d.id_categoria=cd.id WHERE d.id = ?";
     
     if($stmt = $mysqli->prepare($sql)){
         // Bind variables to the prepared statement as parameters
@@ -25,19 +25,6 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
                 /* Fetch result row as an associative array. Since the result set contains only one row, we don't need to use while loop */
                 $row = $result->fetch_array(MYSQLI_ASSOC);
                 
-                // Retrieve individual field value
-                $id = $row["id"];
-                $nome = $row["nome"];
-                $indirizzo = $row["indirizzo"];
-                $cap = $row["cap"];
-                $comune = $row["comune"];
-                $provincia = $row["provincia"];
-                $email = $row["email"];
-                $nome_ref = $row["nome_ref"];
-                $telefono_ref = $row["telefono_ref"];
-                $categoria = $row["categoria"];
-                $created_at = $row["created_at"];
-                $last_modified_at = $row["last_modified_at"];
             } else{
                 // URL doesn't contain valid id parameter. Redirect to error page
                 header("location: ../general/error.php");
@@ -161,7 +148,7 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
                                         <p class="card-text"><?php echo $row["email"]; ?></p>
                                         <br/>
                                         <h5 class="card-title">Categoria</h5>
-                                        <p class="card-text"><?php echo $row["categoria"]; ?></p>
+                                        <p class="card-text"><?php echo $row["categoria"] . "&emsp; <a href='../categoria_ditte/read.php?id=" . $row["id_categoria"] . "'><i class='fas fa-external-link-alt'></i></a>"; ?></p>
                                         <br/>
                                         <h5 class="card-title">Referente</h5>
                                         <p class="card-text"><?php echo $row["nome_ref"]; ?> (<?php echo $row["telefono_ref"]; ?>)</p>
@@ -182,6 +169,11 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
                                 <h3>Interventi associati</h3>
                                 <br />
                                 <div class="table-responsive">
+                                <script type="text/javascript">
+                                    $(document).ready(function() {
+                                        $('#tabella_interventi').DataTable({order:[[1,"desc"]]});
+                                    } );
+                                </script>
                                 <?php                                
                                 // Attempt select query execution
                                 $sql = "SELECT ii.*, i.nome AS nome_immobile, i.indirizzo
@@ -191,13 +183,14 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
                                 error_log($sql);
                                 if($result = $mysqli->query($sql)){
                                     if($result->num_rows > 0){
-                                    echo '<table id="zero_config" class="table table-striped table-bordered no-wrap">';
+                                    echo '<table id="tabella_interventi" class="table table-striped table-bordered no-wrap">';
                                     echo "<thead>";
                                     echo "<tr>";
                                     echo "<th>#</th>";
                                     echo "<th>Data</th>";
                                     echo "<th>Descrizione</th>";
                                     echo "<th>Immobile</th>";
+                                    echo "<th></th>";
                                     echo "</tr>";
                                     echo "</thead>";
                                     echo "<tbody>";
@@ -207,6 +200,7 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
                                         echo "<td>" . $det_row['data'] . "</td>";
                                         echo "<td>" . $det_row['descrizione'] . "</td>";
                                         echo "<td>" . $det_row['nome_immobile'] . "</td>";
+                                        echo "<td><a href='../interventi_immobili/read.php?id=". $det_row['id'] ."' title='Vedi Record'><i class='fas fa-eye'></i></a></td>";
                                         echo "</tr>";
                                     }
                                     echo "</tbody>";                            

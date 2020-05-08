@@ -8,7 +8,7 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
     require_once "../general/config.php";
     
     // Prepare a select statement
-    $sql = "SELECT i.*, ti.tipologia FROM immobili i LEFT JOIN tipo_immobili ti ON i.id_tipologia=ti.id WHERE i.id = ?";
+    $sql = "SELECT i.*, ti.tipologia, i.id_tipologia as id_tipologia FROM immobili i LEFT JOIN tipo_immobili ti ON i.id_tipologia=ti.id WHERE i.id = ?";
     
     if($stmt = $mysqli->prepare($sql)){
         // Bind variables to the prepared statement as parameters
@@ -25,19 +25,6 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
                 /* Fetch result row as an associative array. Since the result set contains only one row, we don't need to use while loop */
                 $row = $result->fetch_array(MYSQLI_ASSOC);
                 
-                // Retrieve individual field value
-                $id = $row["id"];
-                $nome = $row["nome"];
-                $descrizione = $row["descrizione"];
-                $indirizzo = $row["indirizzo"];
-                $cap = $row["cap"];
-                $circoscrizione = $row["circoscrizione"];
-                $codice = $row["codice"];
-                $tipologia = $row["tipologia"];
-                $telefono_ref = $row["telefono_ref"];
-                $nome_ref = $row["nome_ref"];
-                $created_at = $row["created_at"];
-                $last_modified_at = $row["last_modified_at"];
             } else{
                 // URL doesn't contain valid id parameter. Redirect to error page
                 header("location: ../general/error.php");
@@ -158,7 +145,7 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
                                         <p class="card-text"><?php echo $row["codice"]; ?></p>
                                         <br/>
                                         <h5 class="card-title">Tipologia</h5>
-                                        <p class="card-text"><?php echo $row["tipologia"]; ?></p>
+                                        <p class="card-text"><?php echo $row["tipologia"] . "&emsp; <a href='../tipo_immobili/read.php?id=" . $row["id_tipologia"] . "'><i class='fas fa-external-link-alt'></i></a>"; ?></p>
                                         <br/>
                                         <h5 class="card-title">Referente</h5>
                                         <p class="card-text"><?php echo $row["nome_ref"]; ?> (<?php echo $row["telefono_ref"]; ?>)</p>
