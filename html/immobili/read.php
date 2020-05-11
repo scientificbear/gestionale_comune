@@ -138,7 +138,7 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
                                         <p class="card-text"><?php echo $row["descrizione"]; ?></p>
                                         <br/>
                                         <h5 class="card-title">Indirizzo</h5>
-                                        <p class="card-text"><?php echo $row["indirizzo"]; ?></p>
+                                        <p class="card-text"><?php echo $row["indirizzo"] . "&emsp; <a href='https://www.google.com/maps/place/". $row["indirizzo"] . "+Verona+VR+Italia' target='_blank'><i class='far fa-map'></i></a>"; ?></p>
                                         <br/>
                                         <h5 class="card-title">CAP</h5>
                                         <p class="card-text"><?php echo $row["cap"]; ?></p>
