@@ -207,9 +207,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                                 <div class="form-group">
                                     <h5 class="card-title">Immobile</h5>
                                     <?php
-                                        $sql = "SELECT id, nome, indirizzo FROM immobili ORDER BY nome";
+                                        $sql = "SELECT id, nome, indirizzo FROM immobili WHERE circoscrizione IN ".$_SESSION["allowed_circ"]." ORDER BY nome";
                                         if($result = $mysqli->query($sql)){
-                                            echo "<select class='form-control' id='sel_immobili' name='id_immobile'>";
+                                            echo "<select class='form-control' id='sel_immobili' name='id_immobile' style='width:100%'>";
                                             if($result->num_rows > 0){
                                                 echo "<option selected='true' disabled='disabled'>Immobile</option>";
                                                 while($row = $result->fetch_array()){
@@ -237,9 +237,17 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                                 <div class="form-group">
                                     <h5 class="card-title">Ditta</h5>
                                     <?php
-                                        $sql = "SELECT d.id, d.nome, cd.categoria FROM ditte d LEFT JOIN categoria_ditte cd ON d.id_categoria=cd.id ORDER BY nome";
+                                        $sql = "SELECT d.id, d.nome, cd.categoria FROM ditte d
+                                        LEFT JOIN categoria_ditte cd ON d.id_categoria=cd.id
+                                        INNER JOIN (SELECT DISTINCT (id_ditta)
+                                        FROM utenti_circoscrizioni uc
+                                        INNER JOIN ditte_circoscrizioni dc
+                                        ON uc.circoscrizione=dc.circoscrizione
+                                        WHERE id_utente=".$_SESSION["id"].")
+                                        AS sd ON d.id=sd.id_ditta
+                                        ORDER BY nome";
                                         if($result = $mysqli->query($sql)){
-                                            echo "<select class='form-control' id='sel_ditte' name='id_ditta'>";
+                                            echo "<select class='form-control' id='sel_ditte' name='id_ditta' style='width:100%'>";
                                             if($result->num_rows > 0){
                                                 echo "<option selected='true' disabled='disabled'>Ditta</option>";
                                                 while($row = $result->fetch_array()){

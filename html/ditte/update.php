@@ -268,7 +268,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                                     <?php
                                         $sql = "SELECT id, categoria FROM categoria_ditte ORDER BY categoria";
                                         if($result = $mysqli->query($sql)){
-                                            echo "<select class='form-control' id='sel_categoria_ditte' style='width: 200px;' name='id_categoria'>";
+                                            echo "<select class='form-control' id='sel_categoria_ditte' name='id_categoria' style='width:100%'>";
                                             if($result->num_rows > 0){
                                                 echo "<option selected='true' disabled='disabled'>categoria</option>";
                                                 while($row = $result->fetch_array()){

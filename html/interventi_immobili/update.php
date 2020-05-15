@@ -235,7 +235,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                                     <?php
                                         $sql = "SELECT id, nome, indirizzo FROM immobili ORDER BY nome";
                                         if($result = $mysqli->query($sql)){
-                                            echo "<select class='form-control' id='sel_immobili' name='id_immobile'>";
+                                            echo "<select class='form-control' id='sel_immobili' name='id_immobile' style='width:100%'>";
                                             if($result->num_rows > 0){
                                                 echo "<option selected='true' disabled='disabled'>Immobile</option>";
                                                 while($row = $result->fetch_array()){
@@ -265,7 +265,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                                     <?php
                                         $sql = "SELECT d.id, d.nome, cd.categoria FROM ditte d LEFT JOIN categoria_ditte cd ON d.id_categoria=cd.id ORDER BY nome";
                                         if($result = $mysqli->query($sql)){
-                                            echo "<select class='form-control' id='sel_ditte' name='id_ditta'>";
+                                            echo "<select class='form-control' id='sel_ditte' name='id_ditta' style='width:100%'>";
                                             if($result->num_rows > 0){
                                                 echo "<option selected='true' disabled='disabled'>Ditta</option>";
                                                 while($row = $result->fetch_array()){

@@ -219,7 +219,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                                     <?php
                                         $sql = "SELECT id, tipologia FROM tipo_immobili ORDER BY tipologia";
                                         if($result = $mysqli->query($sql)){
-                                            echo "<select id='sel_tipo_immobili' name='id_tipologia' class='form-control'>";
+                                            echo "<select id='sel_tipo_immobili' name='id_tipologia' class='form-control' style='width:100%'>";
                                             if($result->num_rows > 0){
                                                 echo "<option selected='true' disabled='disabled'>Tipologia</option>";
                                                 while($row = $result->fetch_array()){
