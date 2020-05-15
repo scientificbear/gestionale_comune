@@ -9,7 +9,7 @@ require_once "../general/config.php";
 // Define variables and initialize with empty values
 $data = date("Y-m-d");
 $id = $descrizione = $id_immobile = $id_ditta = "";
-$id_err = $data_err = $descrizione_err = $id_immobile_err = $id_ditta_err = "";
+$id_err = $data_err = $descrizione_err = $id_immobili_err = $id_ditte_err = "";
 
 // Processing form data when form is submitted
 if(isset($_POST["id"]) && !empty($_POST["id"])){

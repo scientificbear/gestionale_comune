@@ -40,7 +40,7 @@ CREATE TABLE `ditte` (
 );
 
 CREATE TABLE `interventi_immobili` (
-  `id` int NOT NULL PRIMARY KEY,
+  `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `data` date,
   `descrizione` varchar(255),
   `id_immobile` int NOT NULL,

@@ -8,14 +8,13 @@ require_once "../general/config.php";
  
 // Define variables and initialize with empty values
 $data = date("Y-m-d");
-$id = $descrizione = $id_immobile = $id_ditta = "";
-$id_err = $data_err = $descrizione_err = $id_immobile_err = $id_ditta_err = "";
+$descrizione = $id_immobile = $id_ditta = "";
+$data_err = $descrizione_err = $id_immobile_err = $id_ditta_err = "";
 
 // Processing form data when form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
 
     // Validate
-    list($id, $id_err) = check_variable($_POST["id"], "id");
     list($descrizione, $descrizione_err) = check_variable($_POST["descrizione"], "descrizione");
 
     $id_utente = $_SESSION["id"];
@@ -30,8 +29,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
     if($error_check){
         $table = "interventi_immobili";
-        $field = array("id","descrizione","data","id_immobile","id_utente","id_ditta");
-        $data = array($id,$descrizione,$data,$id_immobile,$id_utente,$id_ditta);
+        $field = array("descrizione","data","id_immobile","id_utente","id_ditta");
+        $data = array($descrizione,$data,$id_immobile,$id_utente,$id_ditta);
         $result = insert_data($table,$field,$data,$mysqli);
 
         if($result){
@@ -45,24 +44,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         } else{
             echo "Something went wrong. Please try again later (", $mysqli->error, ")";
         }
-    }
-} else {
-    if($_SERVER["REQUEST_METHOD"] == "GET"){
-        $sql = "SELECT max(id) AS id FROM interventi_immobili";
-        if($result = $mysqli->query($sql)){
-            if($result->num_rows == 1){
-                $row = $result->fetch_array(MYSQLI_ASSOC);
-                if (is_numeric($row["id"])){
-                    $id = $row["id"] + 1;
-                }
-            } else{
-                header("location: ../general/error.php");
-                exit();
-            }       
-        } else {
-            echo "ERROR: Non riesco ad eseguire $sql. " . $mysqli->error;
-        }
-
     }
 }
 ?>
@@ -179,14 +160,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                         <form class="mt-4" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                             <div class="row">
                             <div class="col-md-6">
-                                <div class="form-group">
-                                    <h5 class="card-title">ID</h5>
-                                    <input type="text" name="id" class="form-control" value="<?php echo $id; ?>">
-                                    <div class="invalid-feedback">
-                                        <?php echo $id_err;?>
-                                    </div>
-                                </div>
-                                <br />
                                 <div class="form-group">
                                     <h5 class="card-title">Data</h5>
                                     <input type="text" name="data" class="form-control" value="<?php echo $data; ?>">
