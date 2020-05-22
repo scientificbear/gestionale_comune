@@ -180,7 +180,7 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
                                         echo "<tr>";
                                         echo "<td>" . $det_row['id'] . "</td>";
                                         echo "<td>" . $det_row['nome'] . "</td>";
-                                        echo "<td>" . $det_row['descrizione'] . "</td>";
+                                        echo "<td>" . trunc_str($det_row['descrizione']) . "</td>";
                                         echo "<td>" . $det_row['indirizzo'] . "</td>";
                                         echo "<td><a href='../immobili/read.php?id=". $det_row['id'] ."' title='Vedi Record'><i class='fas fa-eye'></i></a></td>";
                                         echo "</tr>";
@@ -242,7 +242,7 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
                                             echo "<td>" . $int_row['data'] . "</td>";
                                             echo "<td>" . $int_row['nome_immobile'] . "</td>";
                                             echo "<td>" . $int_row['nome_ditta'] . "</td>";
-                                            echo "<td>" . $int_row['descrizione'] . "</td>";
+                                            echo "<td>" . trunc_str($int_row['descrizione']) . "</td>";
                                             echo "<td><a href='../interventi_immobili/read.php?id=". $int_row['id'] ."' title='Vedi Record'><i class='fas fa-eye'></i></a></td>";
                                             echo "</tr>";
                                         }

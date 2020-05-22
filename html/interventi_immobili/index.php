@@ -1,5 +1,6 @@
 <?php
 require_once "../general/protect.php";
+require_once "../general/utils.php";
 ?>
  
 <!DOCTYPE html>
@@ -105,9 +106,9 @@ require_once "../general/protect.php";
                                         echo "<tr>";
                                         echo "<td>" . $row['id'] . "</td>";
                                         echo "<td>" . $row['data'] . "</td>";
-                                        echo "<td>" . $row['descrizione'] . "</td>";
-                                        echo "<td>".$row['nome_immobile']." (".$row['indirizzo'].")</td>";
-                                        echo "<td>".$row['nome_ditta']." (".$row['email'].")</td>";
+                                        echo "<td>" . trunc_str($row['descrizione']) . "</td>";
+                                        echo "<td>".$row['nome_immobile']."<br/>(".$row['indirizzo'].")</td>";
+                                        echo "<td>".$row['nome_ditta']."<br/>(".$row['email'].")</td>";
                                         echo "<td><a href='read.php?id=". $row['id'] ."' title='Vedi Record'><i class='fas fa-eye'></i></a><span> - </span>";
                                         echo "<a href='print.php?id=". $row['id'] ."' title='Stampa Record'><i class='fas fa-print'></i></a><span> - </span>";
                                         echo "<a href='update.php?id=". $row['id'] ."' title='Aggiorna Record'><i class='fas fa-edit'></i></a><span> - </span>";

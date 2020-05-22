@@ -107,7 +107,7 @@ require_once "../general/utils.php";
                                     echo "<tbody>";
                                     while($row = $result->fetch_array()){
                                         echo "<tr>";
-                                        echo "<td>" . $row['nome'] . "</td>";
+                                        echo "<td>" . trunc_str($row['nome']) . "</td>";
                                         echo "<td>" . $row['indirizzo'] . "</td>";
                                         echo "<td>" . $row['circoscrizione'] . "</td>";
                                         echo "<td>" . $row['codice'] . "</td>";

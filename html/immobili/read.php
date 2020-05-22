@@ -188,6 +188,7 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
                                     echo "<th>Data</th>";
                                     echo "<th>Descrizione</th>";
                                     echo "<th>Ditta</th>";
+                                    echo "<th></th>";
                                     echo "</tr>";
                                     echo "</thead>";
                                     echo "<tbody>";
@@ -195,8 +196,9 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
                                         echo "<tr>";
                                         echo "<td>" . $det_row['id'] . "</td>";
                                         echo "<td>" . $det_row['data'] . "</td>";
-                                        echo "<td>" . $det_row['descrizione'] . "</td>";
+                                        echo "<td>" . trunc_str($det_row['descrizione'], 100) . "</td>";
                                         echo "<td>" . $det_row['nome_ditta'] . "</td>";
+                                        echo "<td><a href='../interventi_immobili/read.php?id=". $det_row['id'] ."' title='Vedi Record'><i class='fas fa-eye'></i></a></td>";
                                         echo "</tr>";
                                     }
                                     echo "</tbody>";                            

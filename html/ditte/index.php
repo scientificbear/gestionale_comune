@@ -111,7 +111,7 @@ require_once "../general/utils.php";
                                     while($row = $result->fetch_array()){
                                         echo "<tr>";
                                         echo "<td>" . $row['id'] . "</td>";
-                                        echo "<td>" . $row['nome'] . "</td>";
+                                        echo "<td>" . trunc_str($row['nome']) . "</td>";
                                         echo "<td>" . $row['comune'] . " (".$row['provincia'].")</td>";
                                         echo "<td>" . $row['email'] . "</td>";
                                         echo "<td>" . $row['categoria'] . "</td>";

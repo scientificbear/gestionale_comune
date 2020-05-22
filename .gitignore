@@ -2,3 +2,5 @@ interface/config.php
 html/config.php
 html/general/config.php
 database/connection
+html/general/config.php.locale
+html/general/config.php.online
