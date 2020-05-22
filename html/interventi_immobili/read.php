@@ -7,10 +7,11 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
     require_once "../general/config.php";
     
     // Prepare a select statement
-    $sql = "SELECT ii.*, i.nome AS nome_immobile, i.indirizzo, ii.id_immobile as id_immobile, d.nome AS nome_ditta, d.email, ii.id_ditta as id_ditta
+    $sql = "SELECT ii.*, i.nome AS nome_immobile, i.indirizzo, ii.id_immobile as id_immobile, d.nome AS nome_ditta, d.email, ii.id_ditta as id_ditta, u.nome as nome_utente, u.cognome as cognome_utente
     FROM interventi_immobili ii
     LEFT JOIN immobili i ON ii.id_immobile=i.id
     LEFT JOIN ditte d ON ii.id_ditta=d.id
+    LEFT JOIN utenti u ON ii.id_utente=u.id
     WHERE ii.id = ?";
     
     if($stmt = $mysqli->prepare($sql)){
@@ -153,6 +154,9 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
                                         <br/>
                                         <h5 class="card-title">Data creazione (ultima modifica) record</h5>
                                         <p class="card-text"><?php echo $row["created_at"]; ?> (<?php echo $row["last_modified_at"]; ?>)</p>
+                                        <br/>
+                                        <h5 class="card-title">Utente</h5>
+                                        <p class="card-text"><?php echo $row["nome_utente"] . ' ' . $row["cognome_utente"]; ?></p>
                                     </div>
                                 </div>
                             </div>

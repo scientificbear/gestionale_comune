@@ -233,16 +233,16 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                                 <div class="form-group">
                                     <h5 class="card-title">Immobile</h5>
                                     <?php
-                                        $sql = "SELECT id, nome, indirizzo FROM immobili ORDER BY nome";
+                                        $sql = "SELECT id, nome, indirizzo, circoscrizione FROM immobili WHERE circoscrizione IN ".$_SESSION["allowed_circ"]." ORDER BY circoscrizione, nome";
                                         if($result = $mysqli->query($sql)){
                                             echo "<select class='form-control' id='sel_immobili' name='id_immobile' style='width:100%'>";
                                             if($result->num_rows > 0){
                                                 echo "<option selected='true' disabled='disabled'>Immobile</option>";
                                                 while($row = $result->fetch_array()){
                                                     if ($row['id']==$id_immobile){
-                                                        echo "<option value=".$row['id']." selected>".$row['nome']." (".$row['indirizzo'].")</option>";
+                                                        echo "<option value=".$row['id']." selected>".$row['circoscrizione']."^: ".$row['nome']." (".$row['indirizzo'].")</option>";
                                                     } else {
-                                                        echo "<option value=".$row['id'].">".$row['nome']." (".$row['indirizzo'].")</option>";
+                                                        echo "<option value=".$row['id'].">".$row['circoscrizione']."^: ".$row['nome']." (".$row['indirizzo'].")</option>";
                                                     }
                                                 }
                                                 // Free result set
