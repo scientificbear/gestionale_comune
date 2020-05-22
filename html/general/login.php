@@ -143,14 +143,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             <img src="../../assets/images/big/icon.png" alt="wrapkit">
                         </div>
                         <h2 class="mt-3 text-center">Log In</h2>
-                        <p class="text-center">Inserisci il tuo indirizzo email per accedere.</p>
+                        <p class="text-center">Inserisci il codice utente per accedere.</p>
                         <form class="mt-4" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="form-group">
-                                        <label class="text-dark" for="email">Email</label>
+                                        <label class="text-dark" for="codice utente">Codice utente</label>
                                         <input class="form-control" id="uname" type="text"
-                                            placeholder="Inserisci la tua email" name="email" value="<?php echo $email; ?>">
+                                            placeholder="Inserisci il codice utente" name="email" value="<?php echo $email; ?>">
                                         <span class="help-block"><?php echo $email_err; ?></span>
                                     </div>
                                 </div>

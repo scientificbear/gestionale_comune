@@ -122,12 +122,12 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
   </tr>
   <tr>
     <td class="sx">Da:</td>
-    <td class="dx" colspan="2">U.O. Tecnico Circoscrizioni - 3^ Circoscrizione</td>
+    <td class="dx" colspan="2">U.O. Tecnico Circoscrizioni </td>
   </tr>
-  <tr>
+  <!-- <tr>
     <td class="sx"></td>
     <td class="dx" colspan="2">Via Sogare, 3 - 37138 Verona - tel. 045.8492.312 - fax 045.8492.328</td>
-  </tr>
+  </tr> -->
   <tr>
     <td class="sx">Oggetto:</td>
     <td class="dx" colspan="2">Richiesta di intervento di manutenzione ordinaria su edifici comunali</td>
@@ -214,20 +214,23 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
         <td style="width:60%">
         </td>
         <td style="width:40%; text-align:center">
-        Il Direttore di lavori<br/>geom. Gian Antonio Carlassara
+        Il Direttore di lavori<br/>
         <br/>
         </td>
     </tr>
 </table>
 
-<br/><br/>
+<br/>
 
 <p>U.O. Tecnico Circoscrizioni<br/>
-Via Sogare, 3 - 37138 Verona<br/>
-Tel. 045.8492.312 - Fax 045.8492.328<br/>
-www.circ3.comune.verona.it - e-mail: circoscrizione3@comune.verona<br/>
-Codice fiscale e partita IVA 00215150236</p>
-';
+Piazza Brà 1 – 37121 Verona<br/>	
+Tel. 045 8492311- 8492330, Fax 045 8492328<br/>
+www.comune.verona.it<br/>
+Email: coordinamentotecnicocircoscrizioni@comune.verona.it<br/>
+Pec: coordinamento.tecnico.circoscrizione@pec.comune.verona.it<br/>
+Codice Fiscale e Partita Iva 00215150236<br/>
+Codice Univoco Ufficio: 3DE6QM<br/>
+</p>';
 
                 // Print text using writeHTMLCell()
                 $pdf->writeHTMLCell('', '', '', 60, $html);
