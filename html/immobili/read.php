@@ -53,9 +53,12 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
 <html dir="ltr" lang="it">
 
 <head>
-    <?php include "../general/head.php"; ?>
+<?php include "../general/head.php"; ?>
     <!-- This page plugin CSS -->
     <link href="../../assets/extra-libs/datatables.net-bs4/css/dataTables.bootstrap4.css" rel="stylesheet">
+    <!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css"> -->
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.6.4/css/buttons.dataTables.min.css">
+    <!-- <script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script> -->	
 </head>
 
 <body>
@@ -172,6 +175,11 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
                                 <h3>Interventi associati</h3>
                                 <br />
                                 <div class="table-responsive">
+                                <script type="text/javascript">
+                                    $(document).ready(function() {
+                                        $('#tabella_interventi').DataTable({order:[[1,"desc"]], dom: 'Bfrtip', buttons: ['excel']});
+                                    } );
+                                </script>
                                 <?php                                
                                 // Attempt select query execution
                                 $sql = "SELECT ii.*, d.nome AS nome_ditta, d.email
@@ -181,7 +189,7 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
                                 error_log($sql);
                                 if($result = $mysqli->query($sql)){
                                     if($result->num_rows > 0){
-                                    echo '<table id="zero_config" class="table table-striped table-bordered no-wrap">';
+                                        echo '<table id="tabella_interventi" class="table table-striped table-bordered no-wrap">';
                                     echo "<thead>";
                                     echo "<tr>";
                                     echo "<th>#</th>";
@@ -248,7 +256,16 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
     <!-- ============================================================== -->
     <?php include "../general/footer.php"; ?>
     <!--This page plugins -->
-    <script src="../../assets/extra-libs/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" language="javascript" src="../../assets/extra-libs/datatables.net/js/jquery.dataTables.min.js"></script>
+    <!-- <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script> -->
+    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.6.4/js/dataTables.buttons.min.js"></script>
+	<!-- <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.flash.min.js"></script> -->
+	<script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+	<!-- <script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script> -->
+	<!-- <script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script> -->
+	<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.html5.min.js"></script>
+	<!-- <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.print.min.js"></script> -->
+
     <script src="../../dist/js/pages/datatable/datatable-basic.init.js"></script>    
 </body>
 
