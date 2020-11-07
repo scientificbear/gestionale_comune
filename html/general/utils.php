@@ -45,7 +45,6 @@ function protect_content($content, $this_role, $allowed_list){
     }
 
 function trunc_str($x, $max_l=50){
-    error_log($x);
     if (strlen($x)>$max_l){
         $x = substr($x, 0, $max_l);
         $x = $x . "...";
