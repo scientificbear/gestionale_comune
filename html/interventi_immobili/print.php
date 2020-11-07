@@ -25,11 +25,11 @@ class MYPDF extends TCPDF {
     // Page footer
     public function Footer() {
         // Position at 15 mm from bottom
-        $this->SetY(-15);
+        // $this->SetY(-15);
         // Set font
-        $this->SetFont('helvetica', 'I', 8);
+        // $this->SetFont('helvetica', 'I', 8);
         // Page number
-        $this->Cell(0, 10, 'Pagina '.$this->getAliasNumPage().'/'.$this->getAliasNbPages(), 0, false, 'C', 0, '', 0, false, 'T', 'M');
+        // $this->Cell(0, 10, 'Pagina '.$this->getAliasNumPage().'/'.$this->getAliasNbPages(), 0, false, 'C', 0, '', 0, false, 'T', 'M');
     }
 }
 
@@ -66,10 +66,10 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
 
                 // set document information
                 $pdf->SetCreator(PDF_CREATOR);
-                $pdf->SetAuthor('Nicola Asuni');
-                $pdf->SetTitle('TCPDF Example 003');
-                $pdf->SetSubject('TCPDF Tutorial');
-                $pdf->SetKeywords('TCPDF, PDF, example, test, guide');
+                $pdf->SetAuthor('U. O. Tecnico Circoscrizioni');
+                $pdf->SetTitle('Dettagli intervento');
+                // $pdf->SetSubject('TCPDF Tutorial');
+                // $pdf->SetKeywords('TCPDF, PDF, example, test, guide');
 
                 // set default header data
                 $pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, PDF_HEADER_TITLE, PDF_HEADER_STRING);
@@ -238,7 +238,7 @@ Codice Univoco Ufficio: 3DE6QM<br/>
                 // ---------------------------------------------------------
 
                 //Close and output PDF document
-                $pdf->Output('example_003.pdf', 'I');
+                $pdf->Output('dettagli_intervento.pdf', 'I');
                 }
             }
         }
